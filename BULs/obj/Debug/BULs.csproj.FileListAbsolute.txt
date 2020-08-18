@@ -1,0 +1,12 @@
+C:\Users\hieuuu\source\repos\BaiTapLonCS\BULs\bin\Debug\BULs.dll
+C:\Users\hieuuu\source\repos\BaiTapLonCS\BULs\bin\Debug\BULs.pdb
+C:\Users\hieuuu\source\repos\BaiTapLonCS\BULs\bin\Debug\DALs.dll
+C:\Users\hieuuu\source\repos\BaiTapLonCS\BULs\bin\Debug\DTOs.dll
+C:\Users\hieuuu\source\repos\BaiTapLonCS\BULs\bin\Debug\DALs.pdb
+C:\Users\hieuuu\source\repos\BaiTapLonCS\BULs\bin\Debug\DALs.dll.config
+C:\Users\hieuuu\source\repos\BaiTapLonCS\BULs\bin\Debug\DTOs.pdb
+C:\Users\hieuuu\source\repos\BaiTapLonCS\BULs\obj\Debug\BULs.csprojAssemblyReference.cache
+C:\Users\hieuuu\source\repos\BaiTapLonCS\BULs\obj\Debug\BULs.csproj.CoreCompileInputs.cache
+C:\Users\hieuuu\source\repos\BaiTapLonCS\BULs\obj\Debug\BULs.csproj.CopyComplete
+C:\Users\hieuuu\source\repos\BaiTapLonCS\BULs\obj\Debug\BULs.dll
+C:\Users\hieuuu\source\repos\BaiTapLonCS\BULs\obj\Debug\BULs.pdb
