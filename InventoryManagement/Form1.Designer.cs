@@ -39,7 +39,8 @@
             this.ColumnAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnSource = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnDestination = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnActions = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ActionEdit = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.ActionDelete = new System.Windows.Forms.DataGridViewLinkColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -52,7 +53,7 @@
             this.panel1.Controls.Add(this.button1);
             this.panel1.Location = new System.Drawing.Point(-4, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(931, 34);
+            this.panel1.Size = new System.Drawing.Size(996, 34);
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
@@ -62,10 +63,10 @@
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(159, 31);
             this.button3.TabIndex = 0;
+            this.button3.TabStop = false;
             this.button3.Text = "Inventory Report";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
-            this.button3.TabStop = false;
             // 
             // button2
             // 
@@ -73,9 +74,9 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(165, 31);
             this.button2.TabIndex = 0;
+            this.button2.TabStop = false;
             this.button2.Text = "Warehouse Management";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.TabStop = false;
             // 
             // button1
             // 
@@ -86,7 +87,6 @@
             this.button1.Text = "Purchase Order Management";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            this.button3.TabStop = false;
             // 
             // dataGridView1
             // 
@@ -98,17 +98,19 @@
             this.ColumnAmount,
             this.ColumnSource,
             this.ColumnDestination,
-            this.ColumnActions});
-            this.dataGridView1.Location = new System.Drawing.Point(12, 40);
+            this.ActionEdit,
+            this.ActionDelete});
+            this.dataGridView1.Location = new System.Drawing.Point(11, 40);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(856, 402);
+            this.dataGridView1.Size = new System.Drawing.Size(956, 402);
             this.dataGridView1.TabIndex = 1;
+            this.dataGridView1.ColumnHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseDoubleClick);
             // 
             // ColumnPartName
             // 
             this.ColumnPartName.HeaderText = "Part Name";
             this.ColumnPartName.Name = "ColumnPartName";
-            this.ColumnPartName.Width = 120;
+            this.ColumnPartName.Width = 196;
             // 
             // ColumnTransactionType
             // 
@@ -133,6 +135,7 @@
             // 
             this.ColumnSource.HeaderText = "Source";
             this.ColumnSource.Name = "ColumnSource";
+            this.ColumnSource.Width = 120;
             // 
             // ColumnDestination
             // 
@@ -140,16 +143,25 @@
             this.ColumnDestination.Name = "ColumnDestination";
             this.ColumnDestination.Width = 150;
             // 
-            // ColumnActions
+            // ActionEdit
             // 
-            this.ColumnActions.HeaderText = "Actions";
-            this.ColumnActions.Name = "ColumnActions";
+            this.ActionEdit.HeaderText = "Actions";
+            this.ActionEdit.Name = "ActionEdit";
+            this.ActionEdit.Text = "Edit";
+            this.ActionEdit.Width = 50;
+            // 
+            // ActionDelete
+            // 
+            this.ActionDelete.HeaderText = "";
+            this.ActionDelete.Name = "ActionDelete";
+            this.ActionDelete.Text = "Remove";
+            this.ActionDelete.Width = 60;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(880, 493);
+            this.ClientSize = new System.Drawing.Size(979, 493);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
@@ -174,7 +186,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnAmount;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDestination;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnActions;
+        private System.Windows.Forms.DataGridViewLinkColumn ActionEdit;
+        private System.Windows.Forms.DataGridViewLinkColumn ActionDelete;
     }
 }
 
