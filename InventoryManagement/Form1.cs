@@ -14,6 +14,8 @@ namespace InventoryManagement
 {
     public partial class Form1 : Form
     {
+        private InventoryBUL inventoryBUL = new InventoryBUL();
+        List<InventoryDTO> inventoryDTOs = new List<InventoryDTO>();
         public Form1()
         {
             InitializeComponent();
@@ -36,8 +38,7 @@ namespace InventoryManagement
         {
 
         }
-        private InventoryBUL inventoryBUL = new InventoryBUL();
-        List<InventoryDTO> inventoryDTOs = new List<InventoryDTO>();
+       
         private void SapXepDuLieuDataGridView(List<InventoryDTO> inventoryDTOs)
         {
             for (int i = 0; i < inventoryDTOs.Count; i++)
@@ -90,6 +91,35 @@ namespace InventoryManagement
         {   
             if(e.ColumnIndex == 6)
             HienThiDuLieuLenDataGridView(inventoryDTOs);
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int indexColumn = e.ColumnIndex;
+            int indexRow = e.RowIndex;
+            if(indexColumn == 7)//remove
+            {
+                string partName = dataGridView1.Rows[indexRow].Cells[0].Value.ToString();
+                string destinationName = dataGridView1.Rows[indexRow].Cells[5].Value.ToString();
+                double chenhlechPart = 
+                    inventoryBUL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(partName, destinationName);
+                double amountChuanBiXoa = double.Parse(dataGridView1.Rows[indexRow].Cells[3].Value.ToString());
+                if(chenhlechPart < amountChuanBiXoa)
+                {
+                    MessageBox.Show("Không thể xóa !", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                } else
+                {
+                    DialogResult a = MessageBox.Show("Bạn có chắc chắn muốn xóa?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (a == DialogResult.Yes)
+                    {
+                        inventoryBUL.XoaMotDong(inventoryDTOs[indexRow].OrderItemID);
+                        MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Form1_Load(sender, e);
+                    }
+                }
+
+            }
+            
         }
     }
 }

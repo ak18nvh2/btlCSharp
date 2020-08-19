@@ -35,5 +35,16 @@ namespace DALs
             return dsOrderItem;
 
         }
+        public void XoaOrderItem(string id)
+        {
+            
+                cnn.Open();
+                string sqlDelete = "DELETE OrderItems WHERE ID = @id";
+                SqlCommand cmd = new SqlCommand(sqlDelete, cnn);
+                cmd.Parameters.AddWithValue("id", id);
+                cmd.ExecuteNonQuery();
+                cnn.Close();
+            
+        }
     }
 }

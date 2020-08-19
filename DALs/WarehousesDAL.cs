@@ -28,5 +28,22 @@ namespace DALs
             cnn.Close();
             return wareHouseName;
         }
+        public string TimKiemIDWareHouseTheoTen(string name)
+        {
+            
+            cnn.Open();
+            string sql = "SELECT ID FROM Warehouses WHERE Name=@name";
+            string wareHouseID = "";
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("name", name);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                wareHouseID = dr["ID"].ToString();
+            }
+            dr.Close();
+            cnn.Close();
+            return wareHouseID;
+        }
     }
 }

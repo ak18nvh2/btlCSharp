@@ -14,6 +14,7 @@ namespace DTOs
         public double Amount { get; set; }
         public string Source { get; set; }
         public string Destination { get; set; }
+        public string OrderItemID { get; set; }
         public InventoryDTO() { }
         public InventoryDTO(string pn, string tt, DateTime td, double a, string s, string d)
         {

@@ -28,5 +28,37 @@ namespace DALs
             cnn.Close();
             return partName;
         }
+        public double TimKiemMinimumAmountTheoID(string ID)
+        {
+            cnn.Open();
+            double minimumAmout = 0;
+            string sql = "SELECT MinimumAmount FROM Parts WHERE ID=@id";
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("id", ID);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                minimumAmout = Convert.ToDouble(dr["MinimumAmount"]);
+            }
+            dr.Close();
+            cnn.Close();
+            return minimumAmout;
+        }
+        public string TimKiemPartIDTheoTen(string name)
+        {
+            cnn.Open();
+            string partID = "";
+            string sql = "SELECT ID FROM Parts WHERE Name=@name";
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("name", name);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                partID = dr["ID"].ToString();
+            }
+            dr.Close();
+            cnn.Close();
+            return partID;
+        }
     }
 }

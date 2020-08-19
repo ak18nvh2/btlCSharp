@@ -4,3 +4,9 @@ C:\Users\hieuuu\source\repos\BaiTapLonCS\DTOs\obj\Debug\DTOs.csprojAssemblyRefer
 C:\Users\hieuuu\source\repos\BaiTapLonCS\DTOs\obj\Debug\DTOs.csproj.CoreCompileInputs.cache
 C:\Users\hieuuu\source\repos\BaiTapLonCS\DTOs\obj\Debug\DTOs.dll
 C:\Users\hieuuu\source\repos\BaiTapLonCS\DTOs\obj\Debug\DTOs.pdb
+C:\Users\hieuuu\Desktop\btlCSharp\DTOs\bin\Debug\DTOs.dll
+C:\Users\hieuuu\Desktop\btlCSharp\DTOs\bin\Debug\DTOs.pdb
+C:\Users\hieuuu\Desktop\btlCSharp\DTOs\obj\Debug\DTOs.csprojAssemblyReference.cache
+C:\Users\hieuuu\Desktop\btlCSharp\DTOs\obj\Debug\DTOs.csproj.CoreCompileInputs.cache
+C:\Users\hieuuu\Desktop\btlCSharp\DTOs\obj\Debug\DTOs.dll
+C:\Users\hieuuu\Desktop\btlCSharp\DTOs\obj\Debug\DTOs.pdb

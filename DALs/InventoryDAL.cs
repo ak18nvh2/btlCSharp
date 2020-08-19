@@ -15,6 +15,9 @@ namespace DALs
         private TransactionTypesDAL transactionTypesDAL = new TransactionTypesDAL();
         private OrdersDAL ordersDAL = new OrdersDAL();
         private PartsDAL partsDAL = new PartsDAL();
+        SqlConnection cnn = new SqlConnection(
+           @"Data Source=DESKTOP-RJS8C83\SQLEXPRESS;Initial Catalog=Session4;Integrated Security=True");
+
         public List<InventoryDTO> DocDanhSachInventory()
         {
             List<InventoryDTO> dsInventory = new List<InventoryDTO>();
@@ -37,10 +40,38 @@ namespace DALs
                     inventoryDTO.Source = warehousesDAL.TimKiemTenWarehouseTheoID(ordersDTO.SourceWarehouseID);
                 }
                 inventoryDTO.Destination = warehousesDAL.TimKiemTenWarehouseTheoID(ordersDTO.DestinationWarehouseID);
+                inventoryDTO.OrderItemID = dsOrderItem[i].ID;
                 dsInventory.Add(inventoryDTO);
             }
 
             return dsInventory;
         }
+        public double TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoVaSoMinimumAmount(string partName, string wareHouseName)
+        {
+            // hàm này dùng để tính tổng số lượng đang có - amount - của 1 part bất kì chuyển đến 1 kho bất kì
+            cnn.Open();
+            double sumAmount = 0;
+            string partID = partsDAL.TimKiemPartIDTheoTen(partName);
+            string wareHouseID = warehousesDAL.TimKiemIDWareHouseTheoTen(wareHouseName);
+            string sql =
+           "SELECT Amount FROM Orders inner join OrderItems ON Orders.ID = OrderItems.OrderID WHERE DestinationWarehouseID = @desID and PartID = @partID";
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("desID", wareHouseID);
+            cmd.Parameters.AddWithValue("partID", partID);
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                sumAmount += Convert.ToDouble(dr["Amount"]);
+            }
+            dr.Close();
+            cnn.Close();
+            double miniAmount = partsDAL.TimKiemMinimumAmountTheoID(partID);
+            return sumAmount-miniAmount;
+        }
+        public void XoaMotDongTrongBang(string orderID)
+        {
+            orderItems.XoaOrderItem(orderID);
+        }
+
     }
 }

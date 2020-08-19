@@ -104,6 +104,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(956, 402);
             this.dataGridView1.TabIndex = 1;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.ColumnHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseDoubleClick);
             // 
             // ColumnPartName
@@ -145,16 +146,20 @@
             // 
             // ActionEdit
             // 
+            this.ActionEdit.ActiveLinkColor = System.Drawing.Color.Blue;
             this.ActionEdit.HeaderText = "Actions";
             this.ActionEdit.Name = "ActionEdit";
             this.ActionEdit.Text = "Edit";
+            this.ActionEdit.VisitedLinkColor = System.Drawing.Color.Blue;
             this.ActionEdit.Width = 50;
             // 
             // ActionDelete
             // 
+            this.ActionDelete.ActiveLinkColor = System.Drawing.Color.Blue;
             this.ActionDelete.HeaderText = "";
             this.ActionDelete.Name = "ActionDelete";
             this.ActionDelete.Text = "Remove";
+            this.ActionDelete.VisitedLinkColor = System.Drawing.Color.Blue;
             this.ActionDelete.Width = 60;
             // 
             // Form1

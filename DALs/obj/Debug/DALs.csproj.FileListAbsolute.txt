@@ -8,3 +8,13 @@ C:\Users\hieuuu\source\repos\BaiTapLonCS\DALs\obj\Debug\DALs.csproj.CoreCompileI
 C:\Users\hieuuu\source\repos\BaiTapLonCS\DALs\obj\Debug\DALs.csproj.CopyComplete
 C:\Users\hieuuu\source\repos\BaiTapLonCS\DALs\obj\Debug\DALs.dll
 C:\Users\hieuuu\source\repos\BaiTapLonCS\DALs\obj\Debug\DALs.pdb
+C:\Users\hieuuu\Desktop\btlCSharp\DALs\bin\Debug\DALs.dll.config
+C:\Users\hieuuu\Desktop\btlCSharp\DALs\bin\Debug\DALs.dll
+C:\Users\hieuuu\Desktop\btlCSharp\DALs\bin\Debug\DALs.pdb
+C:\Users\hieuuu\Desktop\btlCSharp\DALs\bin\Debug\DTOs.dll
+C:\Users\hieuuu\Desktop\btlCSharp\DALs\bin\Debug\DTOs.pdb
+C:\Users\hieuuu\Desktop\btlCSharp\DALs\obj\Debug\DALs.csprojAssemblyReference.cache
+C:\Users\hieuuu\Desktop\btlCSharp\DALs\obj\Debug\DALs.csproj.CoreCompileInputs.cache
+C:\Users\hieuuu\Desktop\btlCSharp\DALs\obj\Debug\DALs.csproj.CopyComplete
+C:\Users\hieuuu\Desktop\btlCSharp\DALs\obj\Debug\DALs.dll
+C:\Users\hieuuu\Desktop\btlCSharp\DALs\obj\Debug\DALs.pdb
