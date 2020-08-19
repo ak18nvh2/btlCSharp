@@ -10,11 +10,11 @@ namespace DTOs
     {
         public string ID { get; set; }
         public string Name { get; set; }
-        public int EffectiveLife { get; set; }
+        public string EffectiveLife { get; set; }
         public int BatchNumberHasRequired { get; set; }
         public int MinimumAmount { get; set; }
         public PartsDTO() { }
-        public PartsDTO(string id, string name, int effectiveLife, int batchNumberHasRequired, int minimumAmount)
+        public PartsDTO(string id, string name, string effectiveLife, int batchNumberHasRequired, int minimumAmount)
         {
             this.ID = id;
             this.Name = name;

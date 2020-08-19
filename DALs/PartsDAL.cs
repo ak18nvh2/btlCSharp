@@ -70,9 +70,10 @@ namespace DALs
             SqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
             {
+                
                 PartsDTO partsDTO = new PartsDTO(dr["ID"].ToString(),
                                                  dr["Name"].ToString(),
-                                                 Convert.ToInt32(dr["EffectiveLife"]),
+                                                 dr["EffectiveLife"].ToString(),
                                                  Convert.ToInt32(dr["BatchNumberHasRequired"]),
                                                  Convert.ToInt32(dr["MinimumAmount"])
                     ) ;

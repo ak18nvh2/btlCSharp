@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BULs;
+using DALs;
 using DTOs;
 
 namespace InventoryManagement
@@ -16,6 +17,7 @@ namespace InventoryManagement
     {
         SuppliersBUL suppliersBUL = new SuppliersBUL();
         WarehousesBUL warehousesBUL = new WarehousesBUL();
+        PartsDAL partsDAL = new PartsDAL();
         public PurchaseOrder()
         {
             InitializeComponent();
@@ -43,6 +45,13 @@ namespace InventoryManagement
             cbbWarehouse.DataSource = bindingSourceWarehouse.DataSource;
             cbbWarehouse.DisplayMember = "Name";
             cbbWarehouse.ValueMember = "ID";
+
+            List<PartsDTO> partsDTOs = partsDAL.DocBanGhiPart();
+            var bindingSourcePart = new BindingSource();
+            bindingSourcePart.DataSource = partsDTOs;
+            cbbPartName.DataSource = bindingSourcePart.DataSource;
+            cbbPartName.DisplayMember = "Name";
+            cbbPartName.ValueMember = "ID";
         }
     }
 }
