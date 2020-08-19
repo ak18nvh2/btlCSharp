@@ -31,8 +31,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.cbbSupplier = new System.Windows.Forms.ComboBox();
+            this.cbbWarehouse = new System.Windows.Forms.ComboBox();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -41,7 +41,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.cbbPartName = new System.Windows.Forms.ComboBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -80,21 +80,21 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "Date:";
             // 
-            // comboBox1
+            // cbbSupplier
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(64, 49);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(233, 21);
-            this.comboBox1.TabIndex = 1;
+            this.cbbSupplier.FormattingEnabled = true;
+            this.cbbSupplier.Location = new System.Drawing.Point(64, 49);
+            this.cbbSupplier.Name = "cbbSupplier";
+            this.cbbSupplier.Size = new System.Drawing.Size(233, 21);
+            this.cbbSupplier.TabIndex = 1;
             // 
-            // comboBox2
+            // cbbWarehouse
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(481, 49);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(233, 21);
-            this.comboBox2.TabIndex = 2;
+            this.cbbWarehouse.FormattingEnabled = true;
+            this.cbbWarehouse.Location = new System.Drawing.Point(481, 49);
+            this.cbbWarehouse.Name = "cbbWarehouse";
+            this.cbbWarehouse.Size = new System.Drawing.Size(233, 21);
+            this.cbbWarehouse.TabIndex = 2;
             // 
             // dateTimePicker1
             // 
@@ -110,7 +110,7 @@
             this.groupBox1.Controls.Add(this.dataGridView1);
             this.groupBox1.Controls.Add(this.textBox2);
             this.groupBox1.Controls.Add(this.textBox1);
-            this.groupBox1.Controls.Add(this.comboBox3);
+            this.groupBox1.Controls.Add(this.cbbPartName);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
@@ -177,13 +177,13 @@
             this.label6.TabIndex = 3;
             this.label6.Text = "Part name:";
             // 
-            // comboBox3
+            // cbbPartName
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(79, 42);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(148, 21);
-            this.comboBox3.TabIndex = 4;
+            this.cbbPartName.FormattingEnabled = true;
+            this.cbbPartName.Location = new System.Drawing.Point(79, 42);
+            this.cbbPartName.Name = "cbbPartName";
+            this.cbbPartName.Size = new System.Drawing.Size(148, 21);
+            this.cbbPartName.TabIndex = 4;
             // 
             // textBox1
             // 
@@ -245,8 +245,8 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cbbWarehouse);
+            this.Controls.Add(this.cbbSupplier);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -266,14 +266,14 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox cbbSupplier;
+        private System.Windows.Forms.ComboBox cbbWarehouse;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox cbbPartName;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;

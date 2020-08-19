@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DTOs;
 
 namespace DALs
 {
@@ -44,6 +45,22 @@ namespace DALs
             dr.Close();
             cnn.Close();
             return wareHouseID;
+        }
+        public List<WarehousesDTO> DocBanGhiWarehouses()
+        {
+            cnn.Open();
+            List<WarehousesDTO> ds = new List<WarehousesDTO>();
+            string sql = "SELECT * FROM Warehouses";
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                WarehousesDTO warehousesDTO = new WarehousesDTO(dr["ID"].ToString(), dr["Name"].ToString());
+                ds.Add(warehousesDTO);
+            }
+            dr.Close();
+            cnn.Close();
+            return ds;
         }
     }
 }

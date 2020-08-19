@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DTOs;
 
 namespace DALs
 {
@@ -59,6 +60,27 @@ namespace DALs
             dr.Close();
             cnn.Close();
             return partID;
+        }
+        public List<PartsDTO> DocBanGhiPart()
+        {
+            cnn.Open();
+            List<PartsDTO> ds = new List<PartsDTO>();
+            string sql = "SELECT * FROM Parts";
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                PartsDTO partsDTO = new PartsDTO(dr["ID"].ToString(),
+                                                 dr["Name"].ToString(),
+                                                 Convert.ToInt32(dr["EffectiveLife"]),
+                                                 Convert.ToInt32(dr["BatchNumberHasRequired"]),
+                                                 Convert.ToInt32(dr["MinimumAmount"])
+                    ) ;
+                ds.Add(partsDTO);
+            }
+            dr.Close();
+            cnn.Close();
+            return ds;
         }
     }
 }

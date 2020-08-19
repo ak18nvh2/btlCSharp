@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DALs;
+using DTOs;
 
 namespace BULs
 {
@@ -13,6 +14,10 @@ namespace BULs
         public string TimTenWareHouseTheoID(string id)
         {
             return warehousesDAL.TimKiemTenWarehouseTheoID(id);
+        }
+        public List<WarehousesDTO> LayDanhSachWarehouse()
+        {
+            return warehousesDAL.DocBanGhiWarehouses();
         }
     }
 }

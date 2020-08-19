@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DTOs;
 
 namespace DALs
 {
@@ -27,6 +28,22 @@ namespace DALs
             dr.Close();
             cnn.Close();
             return supplierName;
+        }
+        public List<SuppliersDTO> DocBanGhiSuppliers()
+        {
+            cnn.Open();
+            List<SuppliersDTO> ds = new List<SuppliersDTO>();
+            string sql = "SELECT * FROM Suppliers";
+            SqlCommand cmd = new SqlCommand(sql,cnn);
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                SuppliersDTO suppliersDTO = new SuppliersDTO(dr["ID"].ToString(), dr["Name"].ToString());
+                ds.Add(suppliersDTO);
+            }
+            dr.Close();
+            cnn.Close();
+            return ds;
         }
     }
 }
