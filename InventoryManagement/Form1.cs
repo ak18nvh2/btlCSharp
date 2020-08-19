@@ -19,7 +19,8 @@ namespace InventoryManagement
         public Form1()
         {
             InitializeComponent();
-          
+            this.StartPosition = FormStartPosition.CenterScreen;
+
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -29,7 +30,12 @@ namespace InventoryManagement
 
         private void button1_Click(object sender, EventArgs e)
         {
+            this.WindowState = FormWindowState.Minimized;
 
+            PurchaseOrder purchaseOrderForm = new PurchaseOrder();
+            purchaseOrderForm.ShowDialog();
+
+            this.WindowState = FormWindowState.Normal;
         }
 
         
@@ -106,14 +112,14 @@ namespace InventoryManagement
                 double amountChuanBiXoa = double.Parse(dataGridView1.Rows[indexRow].Cells[3].Value.ToString());
                 if(chenhlechPart < amountChuanBiXoa)
                 {
-                    MessageBox.Show("Không thể xóa !", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Can't remove this record !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 } else
                 {
-                    DialogResult a = MessageBox.Show("Bạn có chắc chắn muốn xóa?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult a = MessageBox.Show("Are you sure delete this record?", "Notification", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (a == DialogResult.Yes)
                     {
                         inventoryBUL.XoaMotDong(inventoryDTOs[indexRow].OrderItemID);
-                        MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Successfully! Record has been deleted!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Form1_Load(sender, e);
                     }
                 }
