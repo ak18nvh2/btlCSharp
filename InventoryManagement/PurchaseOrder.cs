@@ -109,17 +109,44 @@ namespace InventoryManagement
                     }
                     else
                     {
-                        if (!batchNumbers.Contains(txtBatchNumber.Text))
+                        if (partNames.Contains(partName))
+                        {
+                            int checkBatchNumber = 1;
+                            for(int i = 0; i < partNames.Count; i++)
+                            {
+                                List<string> batchNumberChild = new List<string>();
+                                if(partNames[i] == partName)
+                                {
+                                    if(txtBatchNumber.Text == batchNumbers[i])
+                                    {
+                                        checkBatchNumber = 0;
+                                        break;
+                                    }
+                                        
+                                }
+                            }
+
+                            if (checkBatchNumber == 1)
+                            {
+                                batchNumbers.Add(txtBatchNumber.Text);
+                                amounts.Add(amount);
+                                partNames.Add(partName);
+                                this.showPartListToDataGridView(partNames, batchNumbers, amounts);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Had this batch number on this list!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                        else
                         {
                             batchNumbers.Add(txtBatchNumber.Text);
                             amounts.Add(amount);
                             partNames.Add(partName);
                             this.showPartListToDataGridView(partNames, batchNumbers, amounts);
                         }
-                        else
-                        {
-                            MessageBox.Show("Had this batch number on this list!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                           
+
 
                     }
                 }
@@ -174,7 +201,7 @@ namespace InventoryManagement
                 if(partNames.Count > 0)
                 {
                     int soLuongBanGhiOrder = ordersBUL.DemSoLuongOrder();
-                    int soLuongBangGhiOrderItem = orderItemsBUL.DemSoLuongOrderItem();
+                    
 
                     string orderID = (soLuongBanGhiOrder + 100).ToString();
                     string transactionTypeID = "1";
@@ -187,6 +214,16 @@ namespace InventoryManagement
                         + destionationWareHouseID + " " + d);
                     OrdersDTO ordersDTO = new OrdersDTO(orderID, transactionTypeID, supplierID, sourceWareHouseID, destionationWareHouseID, d);
                     ordersBUL.ThemMotOrder(ordersDTO);
+
+                    for(int i=0; i< partNames.Count; i++)
+                    {
+                        OrderItemsDTO orderItemsDTO = new OrderItemsDTO();
+                        orderItemsDTO.ID = (orderItemsBUL.DemSoLuongOrderItem() + 100).ToString();
+                        orderItemsDTO.PartID = partBUL.TimPartIDTheoTen(partNames[i]);
+                        orderItemsDTO.BatchNumber = batchNumbers[i];
+                        orderItemsDTO.Amount = amounts[i];
+                        orderItemsBUL.ThemMotOrderItem(orderItemsDTO);
+                    }
 
                     MessageBox.Show("Successfully! Record has been added!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
 

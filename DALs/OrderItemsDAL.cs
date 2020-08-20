@@ -84,16 +84,19 @@ namespace DALs
         public void ThemBanGhi(OrderItemsDTO orderItemsDTO)
         {
             cnn.Open();
-            string sql = "INSERT INTO OrderItems  VALUES(@id,@oID,@pID,@bn,@a)";
+            string sql2 = "SET IDENTITY_INSERT [dbo].[OrderItems] ON  ";
+            SqlCommand cmd2 = new SqlCommand(sql2, cnn);
+            cmd2.ExecuteNonQuery();
+            string sql = "INSERT INTO OrderItems (ID, OrderID, PartID, BatchNumber, Amount )  VALUES (@id,@oID,@pID,@bn,@a)";
           //  string sql =
               //  "INSERT INTO OrderItems ( TransactionTypeID, SupplierID, DestinationWarehouseID, Date) VALUES (@ttID,@sID,@dwID,@d)";
             SqlCommand cmd = new SqlCommand(sql, cnn);
             //SqlCommand cmd = new SqlCommand(sql, cnn);
-           
-            cmd.Parameters.AddWithValue("oID", orderItemsDTO.OrderID);
-            cmd.Parameters.AddWithValue("pID", orderItemsDTO.PartID);
-            cmd.Parameters.AddWithValue("bn", orderItemsDTO.BatchNumber);
-            cmd.Parameters.AddWithValue("a", orderItemsDTO.Amount);
+            cmd.Parameters.AddWithValue("@id", Convert.ToInt32(orderItemsDTO.ID));
+            cmd.Parameters.AddWithValue("@oID", Convert.ToInt32(orderItemsDTO.OrderID));
+            cmd.Parameters.AddWithValue("@pID", Convert.ToInt32(orderItemsDTO.PartID));
+            cmd.Parameters.AddWithValue("@bn", orderItemsDTO.BatchNumber);
+            cmd.Parameters.AddWithValue("@a", orderItemsDTO.Amount);
             cmd.ExecuteNonQuery();
             cnn.Close();
         }
