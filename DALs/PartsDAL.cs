@@ -83,5 +83,21 @@ namespace DALs
             cnn.Close();
             return ds;
         }
+        public int TimBatchNumberRequireBangID(string id)
+        {
+            int i = 0;
+            cnn.Open();
+            string sql = "SELECT BatchNumberHasRequired FROM Parts WHERE ID = @id";
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("id", id);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                i = Convert.ToInt32(dr["BatchNumberHasRequired"]);
+            }
+            dr.Close();
+            cnn.Close();
+            return i;
+        }
     }
 }

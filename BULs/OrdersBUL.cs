@@ -15,5 +15,13 @@ namespace BULs
         {
             return ordersDAL.TimBanGhiOrdersTheoID(orderID);
         }
+        public int DemSoLuongOrder()
+        {
+            return ordersDAL.DemSoLuongBanGhi();
+        }
+        public void ThemMotOrder(OrdersDTO ordersDTO)
+        {
+            ordersDAL.ThemBanGhi(ordersDTO);
+        }
     }
 }

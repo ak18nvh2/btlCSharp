@@ -15,9 +15,9 @@ namespace BULs
             
             return inventoryDAL.DocDanhSachInventory();
         }
-        public double TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(string partName, string wareHouseName)
+        public double TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(string partName, string wareHouseName, string batchNumber)
         {
-            return inventoryDAL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoVaSoMinimumAmount(partName, wareHouseName);
+            return inventoryDAL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoVaSoMinimumAmount(partName, wareHouseName,batchNumber);
         }
         public void XoaMotDong(string orderItemID)
         {

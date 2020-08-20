@@ -35,13 +35,9 @@
             this.cbbWarehouse = new System.Windows.Forms.ComboBox();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.ColumnPartName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnBatchNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnAction = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.grvPart = new System.Windows.Forms.DataGridView();
+            this.txtAmount = new System.Windows.Forms.TextBox();
+            this.txtBatchNumber = new System.Windows.Forms.TextBox();
             this.cbbPartName = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -49,8 +45,12 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.ColumnPartName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnBatchNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnAction = new System.Windows.Forms.DataGridViewLinkColumn();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grvPart)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -82,6 +82,7 @@
             // 
             // cbbSupplier
             // 
+            this.cbbSupplier.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbSupplier.FormattingEnabled = true;
             this.cbbSupplier.Location = new System.Drawing.Point(64, 49);
             this.cbbSupplier.Name = "cbbSupplier";
@@ -90,6 +91,7 @@
             // 
             // cbbWarehouse
             // 
+            this.cbbWarehouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbWarehouse.FormattingEnabled = true;
             this.cbbWarehouse.Location = new System.Drawing.Point(481, 49);
             this.cbbWarehouse.Name = "cbbWarehouse";
@@ -107,9 +109,9 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.dataGridView1);
-            this.groupBox1.Controls.Add(this.textBox2);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.grvPart);
+            this.groupBox1.Controls.Add(this.txtAmount);
+            this.groupBox1.Controls.Add(this.txtBatchNumber);
             this.groupBox1.Controls.Add(this.cbbPartName);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
@@ -122,59 +124,37 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = " Part List ";
             // 
-            // dataGridView1
+            // grvPart
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.grvPart.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grvPart.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnPartName,
             this.ColumnBatchNumber,
             this.ColumnAmount,
             this.ColumnAction});
-            this.dataGridView1.Location = new System.Drawing.Point(18, 58);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(743, 189);
-            this.dataGridView1.TabIndex = 7;
+            this.grvPart.Location = new System.Drawing.Point(18, 58);
+            this.grvPart.Name = "grvPart";
+            this.grvPart.Size = new System.Drawing.Size(743, 189);
+            this.grvPart.TabIndex = 7;
+            this.grvPart.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grvPart_CellClick);
             // 
-            // ColumnPartName
+            // txtAmount
             // 
-            this.ColumnPartName.HeaderText = "Part Name";
-            this.ColumnPartName.Name = "ColumnPartName";
-            this.ColumnPartName.Width = 199;
+            this.txtAmount.Location = new System.Drawing.Point(590, 26);
+            this.txtAmount.Name = "txtAmount";
+            this.txtAmount.Size = new System.Drawing.Size(90, 20);
+            this.txtAmount.TabIndex = 6;
             // 
-            // ColumnBatchNumber
+            // txtBatchNumber
             // 
-            this.ColumnBatchNumber.HeaderText = "Batch Number";
-            this.ColumnBatchNumber.Name = "ColumnBatchNumber";
-            this.ColumnBatchNumber.Width = 180;
-            // 
-            // ColumnAmount
-            // 
-            this.ColumnAmount.HeaderText = "Amount";
-            this.ColumnAmount.Name = "ColumnAmount";
-            this.ColumnAmount.Width = 179;
-            // 
-            // ColumnAction
-            // 
-            this.ColumnAction.HeaderText = "Action";
-            this.ColumnAction.Name = "ColumnAction";
-            this.ColumnAction.Width = 142;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(590, 26);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(90, 20);
-            this.textBox2.TabIndex = 6;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(385, 26);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(147, 20);
-            this.textBox1.TabIndex = 5;
+            this.txtBatchNumber.Location = new System.Drawing.Point(385, 26);
+            this.txtBatchNumber.Name = "txtBatchNumber";
+            this.txtBatchNumber.Size = new System.Drawing.Size(147, 20);
+            this.txtBatchNumber.TabIndex = 5;
             // 
             // cbbPartName
             // 
+            this.cbbPartName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbPartName.FormattingEnabled = true;
             this.cbbPartName.Location = new System.Drawing.Point(85, 26);
             this.cbbPartName.Name = "cbbPartName";
@@ -216,6 +196,7 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "+ Add to list";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -235,6 +216,36 @@
             this.button3.TabIndex = 2;
             this.button3.Text = "Submit";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // ColumnPartName
+            // 
+            this.ColumnPartName.HeaderText = "Part Name";
+            this.ColumnPartName.Name = "ColumnPartName";
+            this.ColumnPartName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColumnPartName.Width = 199;
+            // 
+            // ColumnBatchNumber
+            // 
+            this.ColumnBatchNumber.HeaderText = "Batch Number";
+            this.ColumnBatchNumber.Name = "ColumnBatchNumber";
+            this.ColumnBatchNumber.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColumnBatchNumber.Width = 180;
+            // 
+            // ColumnAmount
+            // 
+            this.ColumnAmount.HeaderText = "Amount";
+            this.ColumnAmount.Name = "ColumnAmount";
+            this.ColumnAmount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ColumnAmount.Width = 179;
+            // 
+            // ColumnAction
+            // 
+            this.ColumnAction.ActiveLinkColor = System.Drawing.Color.Blue;
+            this.ColumnAction.HeaderText = "Action";
+            this.ColumnAction.Name = "ColumnAction";
+            this.ColumnAction.VisitedLinkColor = System.Drawing.Color.Blue;
+            this.ColumnAction.Width = 142;
             // 
             // PurchaseOrder
             // 
@@ -255,7 +266,7 @@
             this.Load += new System.EventHandler(this.PurchaseOrder_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grvPart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -270,9 +281,9 @@
         private System.Windows.Forms.ComboBox cbbWarehouse;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.DataGridView grvPart;
+        private System.Windows.Forms.TextBox txtAmount;
+        private System.Windows.Forms.TextBox txtBatchNumber;
         private System.Windows.Forms.ComboBox cbbPartName;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;

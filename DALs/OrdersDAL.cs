@@ -32,5 +32,43 @@ namespace DALs
             cnn.Close();
             return orderDTO;
         }
+        public int DemSoLuongBanGhi()
+        {
+            cnn.Open();
+            string sql = "SELECT COUNT(ID) AS 'DEM' FROM Orders";
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+      
+            SqlDataReader dr = cmd.ExecuteReader();
+            int demSoLuong = 0;
+            if (dr.Read())
+            {
+                
+                demSoLuong = Convert.ToInt32( dr["DEM"]) ;
+
+               
+            }
+            dr.Close();
+            cnn.Close();
+            return demSoLuong;
+        }
+        public void ThemBanGhi(OrdersDTO ordersDTO)
+        {
+            cnn.Open();
+            string sql2 = "SET IDENTITY_INSERT [dbo].[Orders] ON ";
+            SqlCommand cmd2 = new SqlCommand(sql2, cnn);
+            cmd2.ExecuteNonQuery();
+            string sql =
+                "INSERT INTO Orders (ID, TransactionTypeID, SupplierID, DestinationWarehouseID, Date) VALUES (@id,@ttID,@sID,@dwID,@d)";
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+           
+            cmd.Parameters.AddWithValue("ttID",ordersDTO.TransactionTypeID);
+            cmd.Parameters.AddWithValue("sID",ordersDTO.SupplierID);
+            cmd.Parameters.AddWithValue("id", ordersDTO.ID);
+
+            cmd.Parameters.AddWithValue("dwID",ordersDTO.DestinationWarehouseID);
+            cmd.Parameters.AddWithValue("d",ordersDTO.Date);
+            cmd.ExecuteNonQuery();
+            cnn.Close();
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace InventoryManagement
     public partial class Form1 : Form
     {
         private InventoryBUL inventoryBUL = new InventoryBUL();
+        private OrderItemsBUL orderItemsBUL = new OrderItemsBUL();
         List<InventoryDTO> inventoryDTOs = new List<InventoryDTO>();
         public Form1()
         {
@@ -36,6 +37,7 @@ namespace InventoryManagement
             purchaseOrderForm.ShowDialog();
 
             this.WindowState = FormWindowState.Normal;
+            Form1_Load(sender, e);
         }
 
         
@@ -63,7 +65,7 @@ namespace InventoryManagement
         private void HienThiDuLieuLenDataGridView(List<InventoryDTO> inventoryDTOs)
         {
             dataGridView1.Rows.Clear();
-            dataGridView1.ColumnCount = 8;
+            dataGridView1.ColumnCount = 9;
             for (int i = 0; i < inventoryDTOs.Count; i++)
             {
                 dataGridView1.Rows.Add();
@@ -79,7 +81,9 @@ namespace InventoryManagement
                 dataGridView1.Rows[i].Cells[5].Value = inventoryDTOs[i].Destination;
                 dataGridView1.Rows[i].Cells[6].Value = "edit";
                 dataGridView1.Rows[i].Cells[7].Value = "remove";
+                dataGridView1.Rows[i].Cells[8].Value = inventoryDTOs[i].OrderItemID;
             }
+               
            
 
 
@@ -107,8 +111,10 @@ namespace InventoryManagement
             {
                 string partName = dataGridView1.Rows[indexRow].Cells[0].Value.ToString();
                 string destinationName = dataGridView1.Rows[indexRow].Cells[5].Value.ToString();
+                string orderItemID = dataGridView1.Rows[indexRow].Cells[8].Value.ToString();
+                string batchNumber = orderItemsBUL.TimBatchNumberBangID(orderItemID);
                 double chenhlechPart = 
-                    inventoryBUL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(partName, destinationName);
+                    inventoryBUL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(partName, destinationName,batchNumber);
                 double amountChuanBiXoa = double.Parse(dataGridView1.Rows[indexRow].Cells[3].Value.ToString());
                 if(chenhlechPart < amountChuanBiXoa)
                 {

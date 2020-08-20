@@ -41,6 +41,7 @@
             this.ColumnDestination = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ActionEdit = new System.Windows.Forms.DataGridViewLinkColumn();
             this.ActionDelete = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.ColumnOrderItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -99,7 +100,8 @@
             this.ColumnSource,
             this.ColumnDestination,
             this.ActionEdit,
-            this.ActionDelete});
+            this.ActionDelete,
+            this.ColumnOrderItemId});
             this.dataGridView1.Location = new System.Drawing.Point(11, 40);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(956, 441);
@@ -162,6 +164,12 @@
             this.ActionDelete.VisitedLinkColor = System.Drawing.Color.Blue;
             this.ActionDelete.Width = 60;
             // 
+            // ColumnOrderItemId
+            // 
+            this.ColumnOrderItemId.HeaderText = "OrderItemID";
+            this.ColumnOrderItemId.Name = "ColumnOrderItemId";
+            this.ColumnOrderItemId.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -193,6 +201,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDestination;
         private System.Windows.Forms.DataGridViewLinkColumn ActionEdit;
         private System.Windows.Forms.DataGridViewLinkColumn ActionDelete;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnOrderItemId;
     }
 }
 

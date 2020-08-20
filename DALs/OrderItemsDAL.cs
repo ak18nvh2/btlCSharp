@@ -46,5 +46,56 @@ namespace DALs
                 cnn.Close();
             
         }
+        public string TimBatchNumberBangID(string id)
+        {
+            string batchNumber = "";
+            cnn.Open();
+            string sqlSelectOrderItems = "SELECT BatchNumber FROM OrderItems WHERE ID = @id";
+            SqlCommand cmd = new SqlCommand(sqlSelectOrderItems, cnn);
+            cmd.Parameters.AddWithValue("id", id);
+            SqlDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                batchNumber = dr["BatchNumber"].ToString();
+            }
+            dr.Close();
+            cnn.Close();
+            return batchNumber;
+        }
+        public int DemSoLuongBanGhi()
+        {
+            cnn.Open();
+            string sql = "SELECT COUNT(ID) AS 'DEM' FROM OrderItems";
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+
+            SqlDataReader dr = cmd.ExecuteReader();
+            int demSoLuong = 0;
+            if (dr.Read())
+            {
+
+                demSoLuong = Convert.ToInt32(dr["DEM"]);
+
+
+            }
+            dr.Close();
+            cnn.Close();
+            return demSoLuong;
+        }
+        public void ThemBanGhi(OrderItemsDTO orderItemsDTO)
+        {
+            cnn.Open();
+            string sql = "INSERT INTO OrderItems  VALUES(@id,@oID,@pID,@bn,@a)";
+          //  string sql =
+              //  "INSERT INTO OrderItems ( TransactionTypeID, SupplierID, DestinationWarehouseID, Date) VALUES (@ttID,@sID,@dwID,@d)";
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            //SqlCommand cmd = new SqlCommand(sql, cnn);
+           
+            cmd.Parameters.AddWithValue("oID", orderItemsDTO.OrderID);
+            cmd.Parameters.AddWithValue("pID", orderItemsDTO.PartID);
+            cmd.Parameters.AddWithValue("bn", orderItemsDTO.BatchNumber);
+            cmd.Parameters.AddWithValue("a", orderItemsDTO.Amount);
+            cmd.ExecuteNonQuery();
+            cnn.Close();
+        }
     }
 }

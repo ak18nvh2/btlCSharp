@@ -15,5 +15,17 @@ namespace BULs
         {
             return orderItemDAL.DocBanGhiBangOrderItems();
         }
+        public string TimBatchNumberBangID(string id)
+        {
+            return orderItemDAL.TimBatchNumberBangID(id);
+        }
+        public int DemSoLuongOrderItem()
+        {
+            return orderItemDAL.DemSoLuongBanGhi();
+        }
+        public void ThemMotOrderItem(OrderItemsDTO ordersDTO)
+        {
+            orderItemDAL.ThemBanGhi(ordersDTO);
+        }
     }
 }

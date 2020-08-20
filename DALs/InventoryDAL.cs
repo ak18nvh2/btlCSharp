@@ -46,7 +46,7 @@ namespace DALs
 
             return dsInventory;
         }
-        public double TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoVaSoMinimumAmount(string partName, string wareHouseName)
+        public double TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoVaSoMinimumAmount(string partName, string wareHouseName,string batchNumber)
         {
             // hàm này dùng để tính tổng số lượng đang có - amount - của 1 part bất kì chuyển đến 1 kho bất kì
             cnn.Open();
@@ -54,10 +54,11 @@ namespace DALs
             string partID = partsDAL.TimKiemPartIDTheoTen(partName);
             string wareHouseID = warehousesDAL.TimKiemIDWareHouseTheoTen(wareHouseName);
             string sql =
-           "SELECT Amount FROM Orders inner join OrderItems ON Orders.ID = OrderItems.OrderID WHERE DestinationWarehouseID = @desID and PartID = @partID";
+           "SELECT * FROM Orders inner join OrderItems ON Orders.ID = OrderItems.OrderID WHERE DestinationWarehouseID = @desID and PartID = @partID and BatchNumber = @batchNumber ";
             SqlCommand cmd = new SqlCommand(sql, cnn);
             cmd.Parameters.AddWithValue("desID", wareHouseID);
             cmd.Parameters.AddWithValue("partID", partID);
+            cmd.Parameters.AddWithValue("batchNumber", batchNumber);
             SqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
             {
