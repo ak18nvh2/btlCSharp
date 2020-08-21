@@ -69,6 +69,24 @@ namespace DALs
             cmd.ExecuteNonQuery();
             cnn.Close();
         }
+        public void ThemBanGhi2(OrdersDTO ordersDTO)
+        {
+            cnn.Open();
+            string sql2 = "SET IDENTITY_INSERT [dbo].[Orders] ON ";
+            SqlCommand cmd2 = new SqlCommand(sql2, cnn);
+            cmd2.ExecuteNonQuery();
+            string sql =
+                "INSERT INTO Orders (ID, TransactionTypeID,SourceWarehouseID, DestinationWarehouseID, Date) VALUES (@id,@ttID,@sID,@dwID,@d)";
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+
+            cmd.Parameters.AddWithValue("ttID", ordersDTO.TransactionTypeID);
+            cmd.Parameters.AddWithValue("sID", ordersDTO.SourceWarehouseID);
+            cmd.Parameters.AddWithValue("id", ordersDTO.ID);
+            cmd.Parameters.AddWithValue("dwID", ordersDTO.DestinationWarehouseID);
+            cmd.Parameters.AddWithValue("d", ordersDTO.Date);
+            cmd.ExecuteNonQuery();
+            cnn.Close();
+        }
         public List<string> TimDanhSachBatchNumberTuPartID(string partID)
         {
             List<string> ds = new List<string>();

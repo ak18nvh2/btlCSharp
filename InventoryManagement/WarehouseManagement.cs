@@ -236,7 +236,7 @@ namespace InventoryManagement
                         int soLuongBanGhiOrder = ordersBUL.DemSoLuongOrder();
                         string orderID = (soLuongBanGhiOrder + 100).ToString();
                         string transactionTypeID = "2";
-                        string supplierID = null;
+                        string supplierID = "";
                         string sourceWareHouseID = cbbSourceWarehouse.SelectedValue.ToString();
                         string destionationWareHouseID = cbbDestinationWarehouse.SelectedValue.ToString();
                         DateTime d = dateTimePicker1.Value;
@@ -247,7 +247,7 @@ namespace InventoryManagement
                         else
                         {
                             OrdersDTO ordersDTO = new OrdersDTO(orderID, transactionTypeID, supplierID, sourceWareHouseID, destionationWareHouseID, d);
-                            ordersBUL.ThemMotOrder(ordersDTO);
+                            ordersBUL.ThemMotOrder2(ordersDTO);
 
                             for (int i = 0; i < partNames.Count; i++)
                             {

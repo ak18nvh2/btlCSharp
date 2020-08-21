@@ -23,6 +23,10 @@ namespace BULs
         {
             ordersDAL.ThemBanGhi(ordersDTO);
         }
+        public void ThemMotOrder2(OrdersDTO ordersDTO)
+        {
+            ordersDAL.ThemBanGhi2(ordersDTO);
+        }
         public List<string> DocDanhSachBatchNumberTheoPartID(string partID)
         {
             return ordersDAL.TimDanhSachBatchNumberTuPartID(partID);
