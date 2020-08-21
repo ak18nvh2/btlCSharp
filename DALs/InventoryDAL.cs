@@ -65,6 +65,18 @@ namespace DALs
                 sumAmount += Convert.ToDouble(dr["Amount"]);
             }
             dr.Close();
+            string sql2 =
+             "SELECT * FROM Orders inner join OrderItems ON Orders.ID = OrderItems.OrderID WHERE SourceWarehouseID = @sID and PartID = @partID and BatchNumber = @batchNumber ";
+            SqlCommand cmd2 = new SqlCommand(sql2, cnn);
+            cmd2.Parameters.AddWithValue("sID", wareHouseID);
+            cmd2.Parameters.AddWithValue("partID", partID);
+            cmd2.Parameters.AddWithValue("batchNumber", batchNumber);
+            SqlDataReader dr2 = cmd2.ExecuteReader();
+            while (dr2.Read())
+            {
+                sumAmount -= Convert.ToDouble(dr2["Amount"]);
+            }
+            dr2.Close();
             cnn.Close();
             double miniAmount = partsDAL.TimKiemMinimumAmountTheoID(partID);
             return sumAmount-miniAmount;

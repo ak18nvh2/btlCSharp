@@ -23,5 +23,9 @@ namespace BULs
         {
             ordersDAL.ThemBanGhi(ordersDTO);
         }
+        public List<string> DocDanhSachBatchNumberTheoPartID(string partID)
+        {
+            return ordersDAL.TimDanhSachBatchNumberTuPartID(partID);
+        }
     }
 }

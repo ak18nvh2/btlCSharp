@@ -77,12 +77,13 @@ namespace InventoryManagement
         {
             int checkAmount = 1;
             double amount = 0;
-           
-            if(txtAmount.Text == "")
+
+            if (txtAmount.Text == "")
             {
                 checkAmount = 0;
                 MessageBox.Show("Error in Amount!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            } else
+            }
+            else
             {
                 try
                 {
@@ -94,8 +95,8 @@ namespace InventoryManagement
                     MessageBox.Show("Error in Amount!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-           
-            if(checkAmount == 1)
+
+            if (checkAmount == 1)
             {
 
                 if (amount <= 0)
@@ -177,9 +178,9 @@ namespace InventoryManagement
 
 
 
-                   
+
             }
-            
+
 
 
 
@@ -214,7 +215,7 @@ namespace InventoryManagement
                 if(partNames.Count > 0)
                 {
                     int soLuongBanGhiOrder = ordersBUL.DemSoLuongOrder();
-                    
+
 
                     string orderID = (soLuongBanGhiOrder + 100).ToString();
                     string transactionTypeID = "1";
@@ -222,30 +223,37 @@ namespace InventoryManagement
                     string sourceWareHouseID = "";
                     string destionationWareHouseID = cbbWarehouse.SelectedValue.ToString();
                     DateTime d = dateTimePicker1.Value;
-
-                    MessageBox.Show(orderID + " " + transactionTypeID + " " + supplierID + " " + sourceWareHouseID + " "
-                        + destionationWareHouseID + " " + d);
-                    OrdersDTO ordersDTO = new OrdersDTO(orderID, transactionTypeID, supplierID, sourceWareHouseID, destionationWareHouseID, d);
-                    ordersBUL.ThemMotOrder(ordersDTO);
-
-                    for(int i=0; i< partNames.Count; i++)
+                    if (d > DateTime.Now)
                     {
-                        OrderItemsDTO orderItemsDTO = new OrderItemsDTO();
-                        orderItemsDTO.OrderID = orderID;
-                        orderItemsDTO.ID = (orderItemsBUL.DemSoLuongOrderItem() + 1000).ToString();
-                        orderItemsDTO.PartID = partBUL.TimPartIDTheoTen(partNames[i]);
-                        orderItemsDTO.BatchNumber = batchNumbers[i];
-                        orderItemsDTO.Amount = amounts[i];
-                        orderItemsBUL.ThemMotOrderItem(orderItemsDTO);
+                        MessageBox.Show("Error in Date!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        OrdersDTO ordersDTO = new OrdersDTO(orderID, transactionTypeID, supplierID, sourceWareHouseID, destionationWareHouseID, d);
+                        ordersBUL.ThemMotOrder(ordersDTO);
+
+                        for (int i = 0; i < partNames.Count; i++)
+                        {
+                            OrderItemsDTO orderItemsDTO = new OrderItemsDTO();
+                            orderItemsDTO.OrderID = orderID;
+                            orderItemsDTO.ID = (orderItemsBUL.DemSoLuongOrderItem() + 1000).ToString();
+                            orderItemsDTO.PartID = partBUL.TimPartIDTheoTen(partNames[i]);
+                            orderItemsDTO.BatchNumber = batchNumbers[i];
+                            orderItemsDTO.Amount = amounts[i];
+                            orderItemsBUL.ThemMotOrderItem(orderItemsDTO);
+                        }
+
+                        MessageBox.Show("Successfully! Record has been added!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+
                     }
 
-                    MessageBox.Show("Successfully! Record has been added!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.Close();
+                    //  MessageBox.Show(orderID + " " + transactionTypeID + " " + supplierID + " " + sourceWareHouseID + " "
+                    //     + destionationWareHouseID + " " + d);
 
                 }
                 else
                 {
-
                     MessageBox.Show("No one on this part list!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }

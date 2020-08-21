@@ -134,5 +134,16 @@ namespace InventoryManagement
             }
             
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+
+            WarehouseManagement warehouseManagementForm = new WarehouseManagement();
+            warehouseManagementForm.ShowDialog();
+
+            this.WindowState = FormWindowState.Normal;
+            Form1_Load(sender, e);
+        }
     }
 }

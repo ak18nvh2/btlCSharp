@@ -64,11 +64,26 @@ namespace DALs
             cmd.Parameters.AddWithValue("ttID",ordersDTO.TransactionTypeID);
             cmd.Parameters.AddWithValue("sID",ordersDTO.SupplierID);
             cmd.Parameters.AddWithValue("id", ordersDTO.ID);
-
             cmd.Parameters.AddWithValue("dwID",ordersDTO.DestinationWarehouseID);
             cmd.Parameters.AddWithValue("d",ordersDTO.Date);
             cmd.ExecuteNonQuery();
             cnn.Close();
+        }
+        public List<string> TimDanhSachBatchNumberTuPartID(string partID)
+        {
+            List<string> ds = new List<string>();
+            cnn.Open();
+            string sql = " SELECT DISTINCT BatchNumber FROM OrderItems inner join Parts on OrderItems.PartID = Parts.ID WHERE PartID = @id";
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("id", Convert.ToInt32(partID));
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                ds.Add(dr["BatchNumber"].ToString());
+            }
+            dr.Close();
+            cnn.Close();
+            return ds;
         }
     }
 }

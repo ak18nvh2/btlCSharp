@@ -35,3 +35,4 @@ C:\Users\hieuuu\Desktop\btlCSharp\InventoryManagement\obj\Debug\InventoryManagem
 C:\Users\hieuuu\Desktop\btlCSharp\InventoryManagement\obj\Debug\InventoryManagement.exe
 C:\Users\hieuuu\Desktop\btlCSharp\InventoryManagement\obj\Debug\InventoryManagement.pdb
 C:\Users\hieuuu\Desktop\btlCSharp\InventoryManagement\obj\Debug\InventoryManagement.PurchaseOrder.resources
+C:\Users\hieuuu\Desktop\btlCSharp\InventoryManagement\obj\Debug\InventoryManagement.WarehouseManagement.resources
