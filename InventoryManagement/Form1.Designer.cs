@@ -160,6 +160,7 @@
             this.ActionDelete.ActiveLinkColor = System.Drawing.Color.Blue;
             this.ActionDelete.HeaderText = "";
             this.ActionDelete.Name = "ActionDelete";
+            this.ActionDelete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.ActionDelete.Text = "Remove";
             this.ActionDelete.VisitedLinkColor = System.Drawing.Color.Blue;
             this.ActionDelete.Width = 60;

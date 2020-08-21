@@ -124,7 +124,8 @@ namespace InventoryManagement
                     DialogResult a = MessageBox.Show("Are you sure delete this record?", "Notification", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (a == DialogResult.Yes)
                     {
-                        inventoryBUL.XoaMotDong(inventoryDTOs[indexRow].OrderItemID);
+                        
+                        inventoryBUL.XoaMotDong(orderItemID);
                         MessageBox.Show("Successfully! Record has been deleted!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Form1_Load(sender, e);
                     }

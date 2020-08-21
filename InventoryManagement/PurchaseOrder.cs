@@ -94,77 +94,90 @@ namespace InventoryManagement
                     MessageBox.Show("Error in Amount!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+           
             if(checkAmount == 1)
-            {   
-                string partName = cbbPartName.Text;
-                string idPart = cbbPartName.SelectedValue.ToString();
-                
+            {
 
-                int batchNumberHasRequired = partBUL.TimBatchNumberHasRequiredBangID(idPart);
-                if (batchNumberHasRequired == 1)
+                if (amount <= 0)
                 {
-                    if(txtBatchNumber.Text == "")
+                    MessageBox.Show("Error in Amount!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    string partName = cbbPartName.Text;
+                    string idPart = cbbPartName.SelectedValue.ToString();
+
+
+                    int batchNumberHasRequired = partBUL.TimBatchNumberHasRequiredBangID(idPart);
+                    if (batchNumberHasRequired == 1)
                     {
-                        MessageBox.Show("Must type Batch Number!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                    {
-                        if (partNames.Contains(partName))
+                        if (txtBatchNumber.Text == "")
                         {
-                            int checkBatchNumber = 1;
-                            for(int i = 0; i < partNames.Count; i++)
+                            MessageBox.Show("Must type Batch Number!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        else
+                        {
+                            if (partNames.Contains(partName))
                             {
-                                List<string> batchNumberChild = new List<string>();
-                                if(partNames[i] == partName)
+                                int checkBatchNumber = 1;
+                                for (int i = 0; i < partNames.Count; i++)
                                 {
-                                    if(txtBatchNumber.Text == batchNumbers[i])
+                                    List<string> batchNumberChild = new List<string>();
+                                    if (partNames[i] == partName)
                                     {
-                                        checkBatchNumber = 0;
-                                        break;
+                                        if (txtBatchNumber.Text == batchNumbers[i])
+                                        {
+                                            checkBatchNumber = 0;
+                                            break;
+                                        }
+
                                     }
-                                        
+                                }
+
+                                if (checkBatchNumber == 1)
+                                {
+                                    batchNumbers.Add(txtBatchNumber.Text);
+                                    amounts.Add(amount);
+                                    partNames.Add(partName);
+                                    this.showPartListToDataGridView(partNames, batchNumbers, amounts);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Had this batch number on this list!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                             }
-
-                            if (checkBatchNumber == 1)
+                            else
                             {
                                 batchNumbers.Add(txtBatchNumber.Text);
                                 amounts.Add(amount);
                                 partNames.Add(partName);
                                 this.showPartListToDataGridView(partNames, batchNumbers, amounts);
                             }
-                            else
-                            {
-                                MessageBox.Show("Had this batch number on this list!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
+
+
+
                         }
-                        else
+                    }
+                    else
+                    {
+                        if (!partNames.Contains(partName))
                         {
-                            batchNumbers.Add(txtBatchNumber.Text);
+                            batchNumbers.Add("");
                             amounts.Add(amount);
                             partNames.Add(partName);
                             this.showPartListToDataGridView(partNames, batchNumbers, amounts);
                         }
-                           
+                        else
+                        {
+                            MessageBox.Show("Had this part name on this list!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-
+                        }
                     }
                 }
-                else
-                {   
-                    if(!partNames.Contains(partName))
-                    {
-                        batchNumbers.Add("");
-                        amounts.Add(amount);
-                        partNames.Add(partName);
-                        this.showPartListToDataGridView(partNames, batchNumbers, amounts);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Had this part name on this list!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                    }
-                }
+
+
+                   
             }
             
 
@@ -218,7 +231,8 @@ namespace InventoryManagement
                     for(int i=0; i< partNames.Count; i++)
                     {
                         OrderItemsDTO orderItemsDTO = new OrderItemsDTO();
-                        orderItemsDTO.ID = (orderItemsBUL.DemSoLuongOrderItem() + 100).ToString();
+                        orderItemsDTO.OrderID = orderID;
+                        orderItemsDTO.ID = (orderItemsBUL.DemSoLuongOrderItem() + 1000).ToString();
                         orderItemsDTO.PartID = partBUL.TimPartIDTheoTen(partNames[i]);
                         orderItemsDTO.BatchNumber = batchNumbers[i];
                         orderItemsDTO.Amount = amounts[i];
@@ -226,6 +240,7 @@ namespace InventoryManagement
                     }
 
                     MessageBox.Show("Successfully! Record has been added!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close();
 
                 }
                 else
