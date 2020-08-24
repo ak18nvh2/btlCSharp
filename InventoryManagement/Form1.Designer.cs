@@ -92,7 +92,6 @@
             // 
             // dataGridView1
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnPartName,
             this.ColumnTransactionType,
@@ -109,11 +108,13 @@
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.ColumnHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseDoubleClick);
+            this.dataGridView1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.dataGridView1_Scroll);
             // 
             // ColumnPartName
             // 
             this.ColumnPartName.HeaderText = "Part Name";
             this.ColumnPartName.Name = "ColumnPartName";
+            this.ColumnPartName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColumnPartName.Width = 196;
             // 
             // ColumnTransactionType
@@ -121,30 +122,35 @@
             this.ColumnTransactionType.HeaderText = "Transaction Type";
             this.ColumnTransactionType.MaxInputLength = 45000;
             this.ColumnTransactionType.Name = "ColumnTransactionType";
+            this.ColumnTransactionType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColumnTransactionType.Width = 150;
             // 
             // ColumnDate
             // 
             this.ColumnDate.HeaderText = "Date";
             this.ColumnDate.Name = "ColumnDate";
+            this.ColumnDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColumnDate.Width = 90;
             // 
             // ColumnAmount
             // 
             this.ColumnAmount.HeaderText = "Amount";
             this.ColumnAmount.Name = "ColumnAmount";
+            this.ColumnAmount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColumnAmount.Width = 80;
             // 
             // ColumnSource
             // 
             this.ColumnSource.HeaderText = "Source";
             this.ColumnSource.Name = "ColumnSource";
+            this.ColumnSource.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColumnSource.Width = 120;
             // 
             // ColumnDestination
             // 
             this.ColumnDestination.HeaderText = "Destination";
             this.ColumnDestination.Name = "ColumnDestination";
+            this.ColumnDestination.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColumnDestination.Width = 150;
             // 
             // ActionEdit
@@ -154,17 +160,16 @@
             this.ActionEdit.Name = "ActionEdit";
             this.ActionEdit.Text = "Edit";
             this.ActionEdit.VisitedLinkColor = System.Drawing.Color.Blue;
-            this.ActionEdit.Width = 50;
+            this.ActionEdit.Width = 55;
             // 
             // ActionDelete
             // 
             this.ActionDelete.ActiveLinkColor = System.Drawing.Color.Blue;
             this.ActionDelete.HeaderText = "";
             this.ActionDelete.Name = "ActionDelete";
-            this.ActionDelete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.ActionDelete.Text = "Remove";
             this.ActionDelete.VisitedLinkColor = System.Drawing.Color.Blue;
-            this.ActionDelete.Width = 60;
+            this.ActionDelete.Width = 55;
             // 
             // ColumnOrderItemId
             // 

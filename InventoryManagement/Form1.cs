@@ -37,7 +37,7 @@ namespace InventoryManagement
             purchaseOrderForm.ShowDialog();
 
             this.WindowState = FormWindowState.Normal;
-            Form1_Load(sender, e);
+            showDataGridView();
         }
 
         
@@ -85,52 +85,190 @@ namespace InventoryManagement
             }
                
            
-
-
+       
         }
-        private void Form1_Load(object sender, EventArgs e)
+        void showDataGridView()
         {
             inventoryDTOs = inventoryBUL.DocDanhSachInventory();
             SapXepDuLieuDataGridView(inventoryDTOs);
             HienThiDuLieuLenDataGridView(inventoryDTOs);
-            
-           
+        }
+        int checkHienThiHeader = 0;
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            showDataGridView();
+            checkHienThiHeader++;
+            if(checkHienThiHeader == 1)
+            {
+                dataGridView1.ColumnHeadersHeight = dataGridView1.ColumnHeadersHeight * 2;
+                dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                dataGridView1.CellPainting += new DataGridViewCellPaintingEventHandler(dataGridView1_CellPainting);
+                dataGridView1.Paint += new PaintEventHandler(dataGridView1_Paint);
+                dataGridView1.Scroll += new ScrollEventHandler(dataGridView1_Scroll);
+                dataGridView1.ColumnWidthChanged += new DataGridViewColumnEventHandler(dataGridView1_ColumnWidthChanged);
+            }
+        }
+        private void dataGridView1_Paint(object sender, PaintEventArgs e)
+        {
+            Rectangle r1 = dataGridView1.GetCellDisplayRectangle(6, -1, true);
+            int w2 = dataGridView1.GetCellDisplayRectangle(7, -1, true).Width;
+            r1.X += 1;
+            r1.Y += 1;
+            r1.Width = r1.Width + w2;
+            r1.Height = r1.Height-2;
+            e.Graphics.FillRectangle(new SolidBrush(Color.White), r1);
+            StringFormat format = new StringFormat();
+            format.Alignment = StringAlignment.Center;
+            format.LineAlignment = StringAlignment.Center;
+            e.Graphics.DrawString("Action", dataGridView1.ColumnHeadersDefaultCellStyle.Font,
+                new SolidBrush(dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor), r1, format);
         }
 
+        private void dataGridView1_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            Rectangle rtHeader = dataGridView1.DisplayRectangle;
+            rtHeader.Height = dataGridView1.ColumnHeadersHeight / 2 - 10;
+            dataGridView1.Invalidate(rtHeader);
+        }
+        private void dataGridView1_Scroll(object sender, ScrollEventArgs e)
+        {
+            Rectangle rtHeader = dataGridView1.DisplayRectangle;
+            rtHeader.Height = dataGridView1.ColumnHeadersHeight / 2 - 10;
+            dataGridView1.Invalidate(rtHeader);
+        }
+        private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if(e.RowIndex == -1 && e.ColumnIndex > -1)
+            {
+                Rectangle r2 = e.CellBounds;
+                r2.Y += e.CellBounds.Height / 2;
+                r2.Height += e.CellBounds.Height / 2;
+                e.PaintBackground(r2, true);
+                e.PaintContent(r2);
+                e.Handled = true;
+            }
+        }
         private void dataGridView1_ColumnHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {   
             if(e.ColumnIndex == 6)
             HienThiDuLieuLenDataGridView(inventoryDTOs);
         }
-
+        int nut0 = 0, nut1 = 0, nut2 = 0, nut3 = 0, nut4 = 0, nut5 = 0;
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int indexColumn = e.ColumnIndex;
             int indexRow = e.RowIndex;
-            if(indexColumn == 7)//remove
+           if(indexRow >= 0)
             {
-                string partName = dataGridView1.Rows[indexRow].Cells[0].Value.ToString();
-                string destinationName = dataGridView1.Rows[indexRow].Cells[5].Value.ToString();
-                string orderItemID = dataGridView1.Rows[indexRow].Cells[8].Value.ToString();
-                string batchNumber = orderItemsBUL.TimBatchNumberBangID(orderItemID);
-                double chenhlechPart = 
-                    inventoryBUL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(partName, destinationName,batchNumber);
-                double amountChuanBiXoa = double.Parse(dataGridView1.Rows[indexRow].Cells[3].Value.ToString());
-                if(chenhlechPart < amountChuanBiXoa)
+                if (indexColumn == 7)//remove
                 {
-                    MessageBox.Show("Can't remove this record !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                } else
-                {
-                    DialogResult a = MessageBox.Show("Are you sure delete this record?", "Notification", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (a == DialogResult.Yes)
+                    string partName = dataGridView1.Rows[indexRow].Cells[0].Value.ToString();
+                    string destinationName = dataGridView1.Rows[indexRow].Cells[5].Value.ToString();
+                    string orderItemID = dataGridView1.Rows[indexRow].Cells[8].Value.ToString();
+                    string batchNumber = orderItemsBUL.TimBatchNumberBangID(orderItemID);
+                    double chenhlechPart =
+                        inventoryBUL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(partName, destinationName, batchNumber);
+                    double amountChuanBiXoa = double.Parse(dataGridView1.Rows[indexRow].Cells[3].Value.ToString());
+                    if (chenhlechPart < amountChuanBiXoa)
                     {
-                        
-                        inventoryBUL.XoaMotDong(orderItemID);
-                        MessageBox.Show("Successfully! Record has been deleted!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        Form1_Load(sender, e);
+                        MessageBox.Show("Can't remove this record !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                }
+                    else
+                    {
+                        DialogResult a = MessageBox.Show("Are you sure delete this record?", "Notification", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (a == DialogResult.Yes)
+                        {
 
+                            inventoryBUL.XoaMotDong(orderItemID);
+                            MessageBox.Show("Successfully! Record has been deleted!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            showDataGridView();
+                        }
+                    }
+
+                }
+            }
+           else
+            {   
+                
+                switch (indexColumn)
+                {
+                    case 0:
+                        {
+                            nut0++;
+                           
+                            if(nut0 == 3)
+                            {
+                                nut0 = 0;
+                                showDataGridView();
+                                dataGridView1.Columns[0].HeaderText = "Part Name";
+                            }
+                            else if(nut0 == 2)
+                            {
+                                dataGridView1.Columns[0].HeaderText = "🔼  Part Name";
+
+
+
+                            } else if(nut0 == 1)
+                            {
+                                dataGridView1.Columns[0].HeaderText = "🔽  Part Name";
+                            }
+                            MessageBox.Show("⚡"); break;
+                        }
+                    case 1:
+                        {
+                            nut1++;
+                            if (nut1 == 3)
+                            {
+                                nut1 = 0;
+                                showDataGridView();
+                            }
+                            MessageBox.Show(nut1.ToString()); break;
+                        }
+                    case 2:
+                        {
+                            nut2++;
+                            if (nut2 == 3)
+                            {
+                                nut2 = 0;
+                                showDataGridView();
+                            }
+                            MessageBox.Show(nut2.ToString()); break;
+                        }
+                    case 3:
+                        {
+                            nut3++;
+                            if (nut3 == 3)
+                            {
+                                nut3 = 0;
+                                showDataGridView();
+                            }
+                            MessageBox.Show(nut3.ToString()); break;
+                        }
+                    case 4:
+                        {
+                            nut4++;
+                            if (nut4 == 3)
+                            {
+                                nut4 = 0;
+                                showDataGridView();
+                            }
+                            MessageBox.Show(nut4.ToString()); break;
+                        }
+                    case 5:
+                        {
+                            nut5++;
+                            if (nut5 == 3)
+                            {
+                                nut5 = 0;
+                                showDataGridView();
+                            }
+                            MessageBox.Show(nut5.ToString()); break;
+                        }
+
+
+                    default:
+                        break;
+                }
             }
             
         }
