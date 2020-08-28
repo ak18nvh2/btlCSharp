@@ -154,6 +154,15 @@ namespace InventoryManagement
             HienThiDuLieuLenDataGridView(inventoryDTOs);
         }
         int nut0 = 0, nut1 = 0, nut2 = 0, nut3 = 0, nut4 = 0, nut5 = 0;
+        private void setDefaultHeaderDataGridView()
+        {
+            dataGridView1.Columns[0].HeaderText = "Part Name";
+            dataGridView1.Columns[1].HeaderText = "Transaction Type";
+            dataGridView1.Columns[2].HeaderText = "Date";
+            dataGridView1.Columns[3].HeaderText = "Amount";
+            dataGridView1.Columns[4].HeaderText = "Source";
+            dataGridView1.Columns[5].HeaderText = "Destination";
+        }
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             int indexColumn = e.ColumnIndex;
@@ -191,9 +200,11 @@ namespace InventoryManagement
             {   
                 
                 switch (indexColumn)
-                {
+                {   
                     case 0:
                         {
+                            setDefaultHeaderDataGridView();
+                            nut1 = 0; nut2 = 0;nut3 = 0;nut4 = 0;nut5 = 0;
                             nut0++;
                            
                             if(nut0 == 3)
@@ -205,64 +216,280 @@ namespace InventoryManagement
                             else if(nut0 == 2)
                             {
                                 dataGridView1.Columns[0].HeaderText = "🔼  Part Name";
-
+                                for(int i = 0; i < this.inventoryDTOs.Count; i++)
+                                {
+                                    for(int j=i+1; j< this.inventoryDTOs.Count; j++)
+                                    {
+                                        if( String.Compare(this.inventoryDTOs[i].PartName, this.inventoryDTOs[j].PartName) > 0)
+                                        {
+                                            InventoryDTO temp = inventoryDTOs[i];
+                                            inventoryDTOs[i] = inventoryDTOs[j];
+                                            inventoryDTOs[j] = temp;
+                                        }
+                                    }
+                                }
+                                HienThiDuLieuLenDataGridView(this.inventoryDTOs);
 
 
                             } else if(nut0 == 1)
                             {
                                 dataGridView1.Columns[0].HeaderText = "🔽  Part Name";
+                                for (int i = 0; i < this.inventoryDTOs.Count; i++)
+                                {
+                                    for (int j = i + 1; j < this.inventoryDTOs.Count; j++)
+                                    {
+                                        if (String.Compare(this.inventoryDTOs[i].PartName, this.inventoryDTOs[j].PartName) < 0)
+                                        {
+                                            InventoryDTO temp = inventoryDTOs[i];
+                                            inventoryDTOs[i] = inventoryDTOs[j];
+                                            inventoryDTOs[j] = temp;
+                                        }
+                                    }
+                                }
+                                HienThiDuLieuLenDataGridView(this.inventoryDTOs);
                             }
-                            MessageBox.Show("⚡"); break;
-                        }
+                           
+                        } break;
                     case 1:
                         {
+                            setDefaultHeaderDataGridView();
+                            nut0 = 0; nut2 = 0; nut3 = 0; nut4 = 0; nut5 = 0;
                             nut1++;
                             if (nut1 == 3)
                             {
                                 nut1 = 0;
                                 showDataGridView();
+                                dataGridView1.Columns[1].HeaderText = "Transaction Type";
                             }
-                            MessageBox.Show(nut1.ToString()); break;
+                            else if (nut1 == 2)
+                            {
+                                dataGridView1.Columns[1].HeaderText = "🔼  Transaction Type";
+                                for (int i = 0; i < this.inventoryDTOs.Count; i++)
+                                {
+                                    for (int j = i + 1; j < this.inventoryDTOs.Count; j++)
+                                    {
+                                        if (String.Compare(this.inventoryDTOs[i].TransactionType, this.inventoryDTOs[j].TransactionType) > 0)
+                                        {
+                                            InventoryDTO temp = inventoryDTOs[i];
+                                            inventoryDTOs[i] = inventoryDTOs[j];
+                                            inventoryDTOs[j] = temp;
+                                        }
+                                    }
+                                }
+                                HienThiDuLieuLenDataGridView(this.inventoryDTOs);
+
+
+                            }
+                            else if (nut1 == 1)
+                            {
+                                dataGridView1.Columns[1].HeaderText = "🔽  Transaction Type";
+                                for (int i = 0; i < this.inventoryDTOs.Count; i++)
+                                {
+                                    for (int j = i + 1; j < this.inventoryDTOs.Count; j++)
+                                    {
+                                        if (String.Compare(this.inventoryDTOs[i].TransactionType, this.inventoryDTOs[j].TransactionType) < 0)
+                                        {
+                                            InventoryDTO temp = inventoryDTOs[i];
+                                            inventoryDTOs[i] = inventoryDTOs[j];
+                                            inventoryDTOs[j] = temp;
+                                        }
+                                    }
+                                }
+                                HienThiDuLieuLenDataGridView(this.inventoryDTOs);
+                            }
+                            break;
                         }
                     case 2:
                         {
+                            setDefaultHeaderDataGridView();
+                            nut0 = 0; nut1 = 0; nut3 = 0; nut4 = 0; nut5 = 0;
                             nut2++;
                             if (nut2 == 3)
                             {
                                 nut2 = 0;
                                 showDataGridView();
+                                dataGridView1.Columns[2].HeaderText = "Date";
                             }
-                            MessageBox.Show(nut2.ToString()); break;
+                            else if (nut2 == 2)
+                            {
+                                dataGridView1.Columns[2].HeaderText = "🔼 Date";
+                                for (int i = 0; i < this.inventoryDTOs.Count; i++)
+                                {
+                                    for (int j = i + 1; j < this.inventoryDTOs.Count; j++)
+                                    {
+                                        if (this.inventoryDTOs[i].TransactionDate > this.inventoryDTOs[j].TransactionDate)
+                                        {
+                                            InventoryDTO temp = inventoryDTOs[i];
+                                            inventoryDTOs[i] = inventoryDTOs[j];
+                                            inventoryDTOs[j] = temp;
+                                        }
+                                    }
+                                }
+                                HienThiDuLieuLenDataGridView(this.inventoryDTOs);
+
+                            }
+                            else if (nut2 == 1)
+                            {
+                                dataGridView1.Columns[2].HeaderText = "🔽 Date";
+                                for (int i = 0; i < this.inventoryDTOs.Count; i++)
+                                {
+                                    for (int j = i + 1; j < this.inventoryDTOs.Count; j++)
+                                    {
+                                        if (this.inventoryDTOs[i].TransactionDate < this.inventoryDTOs[j].TransactionDate)
+                                        {
+                                            InventoryDTO temp = inventoryDTOs[i];
+                                            inventoryDTOs[i] = inventoryDTOs[j];
+                                            inventoryDTOs[j] = temp;
+                                        }
+                                    }
+                                }
+                                HienThiDuLieuLenDataGridView(this.inventoryDTOs);
+                            }
+                             break;
                         }
                     case 3:
                         {
+                            nut0 = 0; nut1 = 0; nut2 = 0; nut4 = 0; nut5 = 0;
+                            setDefaultHeaderDataGridView();
                             nut3++;
                             if (nut3 == 3)
                             {
                                 nut3 = 0;
                                 showDataGridView();
+                                dataGridView1.Columns[3].HeaderText = "Amount";
                             }
-                            MessageBox.Show(nut3.ToString()); break;
+                            else if (nut3 == 2)
+                            {
+                                dataGridView1.Columns[3].HeaderText = "🔼  Amount";
+                                for (int i = 0; i < this.inventoryDTOs.Count; i++)
+                                {
+                                    for (int j = i + 1; j < this.inventoryDTOs.Count; j++)
+                                    {
+                                        if (this.inventoryDTOs[i].Amount > this.inventoryDTOs[j].Amount)
+                                        {
+                                            InventoryDTO temp = inventoryDTOs[i];
+                                            inventoryDTOs[i] = inventoryDTOs[j];
+                                            inventoryDTOs[j] = temp;
+                                        }
+                                    }
+                                }
+                                HienThiDuLieuLenDataGridView(this.inventoryDTOs);
+
+                            }
+                            else if (nut3 == 1)
+                            {
+                                dataGridView1.Columns[3].HeaderText = "🔽  Amount";
+                                for (int i = 0; i < this.inventoryDTOs.Count; i++)
+                                {
+                                    for (int j = i + 1; j < this.inventoryDTOs.Count; j++)
+                                    {
+                                        if (this.inventoryDTOs[i].Amount < this.inventoryDTOs[j].Amount)
+                                        {
+                                            InventoryDTO temp = inventoryDTOs[i];
+                                            inventoryDTOs[i] = inventoryDTOs[j];
+                                            inventoryDTOs[j] = temp;
+                                        }
+                                    }
+                                }
+                                HienThiDuLieuLenDataGridView(this.inventoryDTOs);
+                            }
+                             break;
                         }
                     case 4:
                         {
+                            nut0 = 0; nut1 = 0; nut2 = 0; nut3 = 0; nut5 = 0;
+                            setDefaultHeaderDataGridView();
                             nut4++;
                             if (nut4 == 3)
                             {
                                 nut4 = 0;
                                 showDataGridView();
+                                dataGridView1.Columns[4].HeaderText = "Source";
                             }
-                            MessageBox.Show(nut4.ToString()); break;
+                            else if (nut4 == 2)
+                            {
+                                dataGridView1.Columns[4].HeaderText = "🔼  Source";
+                                for (int i = 0; i < this.inventoryDTOs.Count; i++)
+                                {
+                                    for (int j = i + 1; j < this.inventoryDTOs.Count; j++)
+                                    {
+                                        if (String.Compare(this.inventoryDTOs[i].Source, this.inventoryDTOs[j].Source) > 0)
+                                        {
+                                            InventoryDTO temp = inventoryDTOs[i];
+                                            inventoryDTOs[i] = inventoryDTOs[j];
+                                            inventoryDTOs[j] = temp;
+                                        }
+                                    }
+                                }
+                                HienThiDuLieuLenDataGridView(this.inventoryDTOs);
+
+                            }
+                            else if (nut4 == 1)
+                            {
+                                dataGridView1.Columns[4].HeaderText = "🔽  Source";
+                                for (int i = 0; i < this.inventoryDTOs.Count; i++)
+                                {
+                                    for (int j = i + 1; j < this.inventoryDTOs.Count; j++)
+                                    {
+                                        if (String.Compare(this.inventoryDTOs[i].Source, this.inventoryDTOs[j].Source) < 0)
+                                        {
+                                            InventoryDTO temp = inventoryDTOs[i];
+                                            inventoryDTOs[i] = inventoryDTOs[j];
+                                            inventoryDTOs[j] = temp;
+                                        }
+                                    }
+                                }
+                                HienThiDuLieuLenDataGridView(this.inventoryDTOs);
+                            }
+                             break;
                         }
                     case 5:
                         {
+                            nut0 = 0; nut1 = 0; nut2 = 0; nut3 = 0; nut4 = 0;
+                            setDefaultHeaderDataGridView();
                             nut5++;
                             if (nut5 == 3)
                             {
                                 nut5 = 0;
                                 showDataGridView();
+                                dataGridView1.Columns[5].HeaderText = "Destination";
                             }
-                            MessageBox.Show(nut5.ToString()); break;
+                            else if (nut5 == 2)
+                            {
+                                dataGridView1.Columns[5].HeaderText = "🔼  Destination";
+                                for (int i = 0; i < this.inventoryDTOs.Count; i++)
+                                {
+                                    for (int j = i + 1; j < this.inventoryDTOs.Count; j++)
+                                    {
+                                        if (String.Compare(this.inventoryDTOs[i].Destination, this.inventoryDTOs[j].Destination) > 0)
+                                        {
+                                            InventoryDTO temp = inventoryDTOs[i];
+                                            inventoryDTOs[i] = inventoryDTOs[j];
+                                            inventoryDTOs[j] = temp;
+                                        }
+                                    }
+                                }
+                                HienThiDuLieuLenDataGridView(this.inventoryDTOs);
+
+                            }
+                            else if (nut5 == 1)
+                            {
+                                dataGridView1.Columns[5].HeaderText = "🔽  Destination";
+                                for (int i = 0; i < this.inventoryDTOs.Count; i++)
+                                {
+                                    for (int j = i + 1; j < this.inventoryDTOs.Count; j++)
+                                    {
+                                        if (String.Compare(this.inventoryDTOs[i].Destination, this.inventoryDTOs[j].Destination) < 0)
+                                        {
+                                            InventoryDTO temp = inventoryDTOs[i];
+                                            inventoryDTOs[i] = inventoryDTOs[j];
+                                            inventoryDTOs[j] = temp;
+                                        }
+                                    }
+                                }
+                                HienThiDuLieuLenDataGridView(this.inventoryDTOs);
+                            }
+                            break;
                         }
 
 
