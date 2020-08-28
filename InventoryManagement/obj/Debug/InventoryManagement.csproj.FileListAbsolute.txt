@@ -27,7 +27,6 @@ C:\Users\hieuuu\Desktop\btlCSharp\InventoryManagement\bin\Debug\DALs.pdb
 C:\Users\hieuuu\Desktop\btlCSharp\InventoryManagement\bin\Debug\DALs.dll.config
 C:\Users\hieuuu\Desktop\btlCSharp\InventoryManagement\bin\Debug\DTOs.pdb
 C:\Users\hieuuu\Desktop\btlCSharp\InventoryManagement\obj\Debug\InventoryManagement.csprojAssemblyReference.cache
-C:\Users\hieuuu\Desktop\btlCSharp\InventoryManagement\obj\Debug\InventoryManagement.Form1.resources
 C:\Users\hieuuu\Desktop\btlCSharp\InventoryManagement\obj\Debug\InventoryManagement.Properties.Resources.resources
 C:\Users\hieuuu\Desktop\btlCSharp\InventoryManagement\obj\Debug\InventoryManagement.csproj.GenerateResource.cache
 C:\Users\hieuuu\Desktop\btlCSharp\InventoryManagement\obj\Debug\InventoryManagement.csproj.CoreCompileInputs.cache
@@ -36,3 +35,5 @@ C:\Users\hieuuu\Desktop\btlCSharp\InventoryManagement\obj\Debug\InventoryManagem
 C:\Users\hieuuu\Desktop\btlCSharp\InventoryManagement\obj\Debug\InventoryManagement.pdb
 C:\Users\hieuuu\Desktop\btlCSharp\InventoryManagement\obj\Debug\InventoryManagement.PurchaseOrder.resources
 C:\Users\hieuuu\Desktop\btlCSharp\InventoryManagement\obj\Debug\InventoryManagement.WarehouseManagement.resources
+C:\Users\hieuuu\Desktop\btlCSharp\InventoryManagement\obj\Debug\InventoryManagement.InventoryManagement.resources
+C:\Users\hieuuu\Desktop\btlCSharp\InventoryManagement\obj\Debug\InventoryManagement.InventoryReport.resources

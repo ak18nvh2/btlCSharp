@@ -12,12 +12,12 @@ using DTOs;
 
 namespace InventoryManagement
 {
-    public partial class Form1 : Form
+    public partial class InventoryManagement : Form
     {
         private InventoryBUL inventoryBUL = new InventoryBUL();
         private OrderItemsBUL orderItemsBUL = new OrderItemsBUL();
         List<InventoryDTO> inventoryDTOs = new List<InventoryDTO>();
-        public Form1()
+        public InventoryManagement()
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
@@ -26,7 +26,13 @@ namespace InventoryManagement
 
         private void button3_Click(object sender, EventArgs e)
         {
+            this.WindowState = FormWindowState.Minimized;
 
+            InventoryReport inventoryReport = new InventoryReport();
+            inventoryReport.ShowDialog();
+
+            this.WindowState = FormWindowState.Normal;
+            showDataGridView();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -120,7 +126,7 @@ namespace InventoryManagement
             StringFormat format = new StringFormat();
             format.Alignment = StringAlignment.Center;
             format.LineAlignment = StringAlignment.Center;
-            e.Graphics.DrawString("Action", dataGridView1.ColumnHeadersDefaultCellStyle.Font,
+            e.Graphics.DrawString("Actions", dataGridView1.ColumnHeadersDefaultCellStyle.Font,
                 new SolidBrush(dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor), r1, format);
         }
 
@@ -180,7 +186,7 @@ namespace InventoryManagement
                     double amountChuanBiXoa = double.Parse(dataGridView1.Rows[indexRow].Cells[3].Value.ToString());
                     if (chenhlechPart < amountChuanBiXoa)
                     {
-                        MessageBox.Show("Can't remove this record !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Can't remove this record ! If remove this record, the inventory of a part in this warehouse negative "+(amountChuanBiXoa-chenhlechPart) +"! ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     else
                     {
@@ -503,10 +509,8 @@ namespace InventoryManagement
         private void button2_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
-
             WarehouseManagement warehouseManagementForm = new WarehouseManagement();
             warehouseManagementForm.ShowDialog();
-
             this.WindowState = FormWindowState.Normal;
             Form1_Load(sender, e);
         }

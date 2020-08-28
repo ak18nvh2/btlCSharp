@@ -46,11 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="InventoryManagement.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="InventoryManagement.Designer.cs">
+      <DependentUpon>InventoryManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InventoryReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InventoryReport.Designer.cs">
+      <DependentUpon>InventoryReport.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -66,8 +72,11 @@
     <Compile Include="WarehouseManagement.Designer.cs">
       <DependentUpon>WarehouseManagement.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="InventoryManagement.resx">
+      <DependentUpon>InventoryManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InventoryReport.resx">
+      <DependentUpon>InventoryReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

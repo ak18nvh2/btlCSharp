@@ -25,6 +25,7 @@ namespace InventoryManagement
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -81,7 +82,7 @@ namespace InventoryManagement
             if (txtAmount.Text == "")
             {
                 checkAmount = 0;
-                MessageBox.Show("Error in Amount!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Amount must not empty!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -92,7 +93,7 @@ namespace InventoryManagement
                 catch (FormatException)
                 {
                     checkAmount = 0;
-                    MessageBox.Show("Error in Amount!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Amount needs to be of positive decimal value!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
@@ -101,7 +102,7 @@ namespace InventoryManagement
 
                 if (amount <= 0)
                 {
-                    MessageBox.Show("Error in Amount!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Amount needs to be of positive decimal value!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -217,7 +218,7 @@ namespace InventoryManagement
                     int soLuongBanGhiOrder = ordersBUL.DemSoLuongOrder();
 
 
-                    string orderID = (soLuongBanGhiOrder + 100).ToString();
+                    string orderID = (soLuongBanGhiOrder + 1000).ToString();
                     string transactionTypeID = "1";
                     string supplierID = cbbSupplier.SelectedValue.ToString();
                     string sourceWareHouseID = "";
@@ -236,7 +237,7 @@ namespace InventoryManagement
                         {
                             OrderItemsDTO orderItemsDTO = new OrderItemsDTO();
                             orderItemsDTO.OrderID = orderID;
-                            orderItemsDTO.ID = (orderItemsBUL.DemSoLuongOrderItem() + 1000).ToString();
+                            orderItemsDTO.ID = (orderItemsBUL.DemSoLuongOrderItem() + 10000).ToString();
                             orderItemsDTO.PartID = partBUL.TimPartIDTheoTen(partNames[i]);
                             orderItemsDTO.BatchNumber = batchNumbers[i];
                             orderItemsDTO.Amount = amounts[i];

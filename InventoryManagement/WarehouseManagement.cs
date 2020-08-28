@@ -103,7 +103,7 @@ namespace InventoryManagement
             if (txtAmount.Text == "")
             {
                 checkAmount = 0;
-                MessageBox.Show("Error in Amount!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Amount must not empty!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -114,7 +114,7 @@ namespace InventoryManagement
                 catch (FormatException)
                 {
                     checkAmount = 0;
-                    MessageBox.Show("Error in Amount!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Amount needs to be of positive decimal value!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
@@ -123,7 +123,7 @@ namespace InventoryManagement
 
                 if (amount <= 0)
                 {
-                    MessageBox.Show("Error in Amount!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Amount needs to be of positive decimal value!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
@@ -215,7 +215,8 @@ namespace InventoryManagement
                 }
                 else
                 {
-                    int checkHopLe = 1;
+                    int checkHopLe = -1;
+                    double negativeAmount = 0;
                     for(int i=0; i< partNames.Count; i++)
                     {
                         double chenhlechPart =
@@ -223,18 +224,24 @@ namespace InventoryManagement
                         double amountChuanBiXoa = amounts[i];
                         if(chenhlechPart < amountChuanBiXoa)
                         {
-                            checkHopLe = 0;
+                            checkHopLe = i+1;
+                            negativeAmount = amountChuanBiXoa - chenhlechPart;
                             break;
                         }
                     }
-                    if(checkHopLe == 0)
+                    if(checkHopLe != -1)
                     {
-                        MessageBox.Show("This list has part can't use!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        string batchNumberX = "";
+                        if(cbbBatchNumber.Text != "")
+                        {
+                            batchNumberX = " with batch number " + batchNumbers[checkHopLe-1];
+                        }
+                        MessageBox.Show("Error in line "+checkHopLe+ "! The inventory for a part "+partNames[checkHopLe-1]+ batchNumberX+ " negative "+negativeAmount+"!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     else
                     {
                         int soLuongBanGhiOrder = ordersBUL.DemSoLuongOrder();
-                        string orderID = (soLuongBanGhiOrder + 100).ToString();
+                        string orderID = (soLuongBanGhiOrder + 1000).ToString();
                         string transactionTypeID = "2";
                         string supplierID = "";
                         string sourceWareHouseID = cbbSourceWarehouse.SelectedValue.ToString();
@@ -248,12 +255,12 @@ namespace InventoryManagement
                         {
                             OrdersDTO ordersDTO = new OrdersDTO(orderID, transactionTypeID, supplierID, sourceWareHouseID, destionationWareHouseID, d);
                             ordersBUL.ThemMotOrder2(ordersDTO);
-
+                            int orderItemID = orderItemsBUL.DemSoLuongOrderItem() + 1000;
                             for (int i = 0; i < partNames.Count; i++)
                             {
                                 OrderItemsDTO orderItemsDTO = new OrderItemsDTO();
                                 orderItemsDTO.OrderID = orderID;
-                                orderItemsDTO.ID = (orderItemsBUL.DemSoLuongOrderItem() + 1000).ToString();
+                                orderItemsDTO.ID = (++orderItemID).ToString();
                                 orderItemsDTO.PartID = partBUL.TimPartIDTheoTen(partNames[i]);
                                 orderItemsDTO.BatchNumber = batchNumbers[i];
                                 orderItemsDTO.Amount = amounts[i];
