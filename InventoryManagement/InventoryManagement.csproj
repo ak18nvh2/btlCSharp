@@ -58,6 +58,12 @@
     <Compile Include="InventoryReport.Designer.cs">
       <DependentUpon>InventoryReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="ListBatchNumbersDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ListBatchNumbersDetail.Designer.cs">
+      <DependentUpon>ListBatchNumbersDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurchaseOrder.cs">
@@ -77,6 +83,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="InventoryReport.resx">
       <DependentUpon>InventoryReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListBatchNumbersDetail.resx">
+      <DependentUpon>ListBatchNumbersDetail.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

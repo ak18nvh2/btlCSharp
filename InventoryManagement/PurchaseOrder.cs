@@ -20,12 +20,18 @@ namespace InventoryManagement
         OrderItemsBUL orderItemsBUL = new OrderItemsBUL();
         OrdersBUL ordersBUL = new OrdersBUL();
         PartBUL partBUL = new PartBUL();
-
+        string orderID = "";
         public PurchaseOrder()
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
 
+        }
+        public PurchaseOrder(string orderID)
+        {
+            InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.orderID = orderID;
         }
 
         private void button2_Click(object sender, EventArgs e)

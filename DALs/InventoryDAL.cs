@@ -48,7 +48,7 @@ namespace DALs
         }
         public double TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoVaSoMinimumAmount(string partName, string wareHouseName,string batchNumber)
         {
-            // hàm này dùng để tính tổng số lượng đang có - amount - của 1 part bất kì chuyển đến 1 kho bất kì
+            // hàm này dùng để tính tổng số lượng đang có - amount - của 1 part bất kì ở 1 kho bất kì có batchNumber bất kì
             cnn.Open();
             double sumAmount = 0;
             string partID = partsDAL.TimKiemPartIDTheoTen(partName);
@@ -81,9 +81,79 @@ namespace DALs
             double miniAmount = partsDAL.TimKiemMinimumAmountTheoID(partID);
             return sumAmount-miniAmount;
         }
+        public double TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoVaSoMinimumAmount(string partName, string wareHouseName)
+        {
+            // hàm này dùng để tính tổng số lượng đang có - amount - của 1 part bất kì ở 1 kho bất kì có batchNumber bất kì
+            cnn.Open();
+            double sumAmount = 0;
+            string partID = partsDAL.TimKiemPartIDTheoTen(partName);
+            string wareHouseID = warehousesDAL.TimKiemIDWareHouseTheoTen(wareHouseName);
+            string sql =
+           "SELECT * FROM Orders inner join OrderItems ON Orders.ID = OrderItems.OrderID WHERE DestinationWarehouseID = @desID and PartID = @partID";
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("desID", wareHouseID);
+            cmd.Parameters.AddWithValue("partID", partID);
+           
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                sumAmount += Convert.ToDouble(dr["Amount"]);
+            }
+            dr.Close();
+            string sql2 =
+             "SELECT * FROM Orders inner join OrderItems ON Orders.ID = OrderItems.OrderID WHERE SourceWarehouseID = @sID and PartID = @partID";
+            SqlCommand cmd2 = new SqlCommand(sql2, cnn);
+            cmd2.Parameters.AddWithValue("sID", wareHouseID);
+            cmd2.Parameters.AddWithValue("partID", partID);
+            
+            SqlDataReader dr2 = cmd2.ExecuteReader();
+            while (dr2.Read())
+            {
+                sumAmount -= Convert.ToDouble(dr2["Amount"]);
+            }
+            dr2.Close();
+            cnn.Close();
+            double miniAmount = partsDAL.TimKiemMinimumAmountTheoID(partID);
+            return sumAmount - miniAmount;
+        }
         public void XoaMotDongTrongBang(string orderID)
         {
             orderItems.XoaOrderItem(orderID);
+        }
+        public double TinhTongAmountCuaPartMaKhoDaNhanTheoIDKhoVaIDPart(string wareHouseId, string partID)
+        {
+            cnn.Open();
+            string sql = "SELECT Amount FROM Orders inner join OrderItems ON Orders.ID = OrderItems.OrderID WHERE DestinationWarehouseID = @wareHouseID and PartID = @partID ";
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("wareHouseID", wareHouseId);
+            cmd.Parameters.AddWithValue("partID", partID);
+            SqlDataReader dr = cmd.ExecuteReader();
+            double sumAmount = 0;
+            while (dr.Read())
+            {
+                sumAmount += Convert.ToDouble(dr["Amount"]);
+            }
+            dr.Close();
+            cnn.Close();
+            return sumAmount;
+        }
+        public double TinhTongAmountCuaPartMaKhoDaNhanTheoIDKhoVaIDPart(string wareHouseId, string partID, string batchNumber)
+        {
+            cnn.Open();
+            string sql = "SELECT Amount FROM Orders inner join OrderItems ON Orders.ID = OrderItems.OrderID WHERE DestinationWarehouseID = @did and PartID = @pid and BatchNumber = @bn ";
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("did", wareHouseId);
+            cmd.Parameters.AddWithValue("pid", partID);
+            cmd.Parameters.AddWithValue("bn", batchNumber);
+            SqlDataReader dr = cmd.ExecuteReader();
+            double sumAmount = 0;
+            while (dr.Read())
+            {
+                sumAmount += Convert.ToDouble(dr["Amount"]);
+            }
+            dr.Close();
+            cnn.Close();
+            return sumAmount;
         }
 
     }

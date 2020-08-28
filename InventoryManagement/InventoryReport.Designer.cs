@@ -29,21 +29,21 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.session4DataSet1 = new DALs.Session4DataSet();
             this.label2 = new System.Windows.Forms.Label();
             this.cbbWarehouse = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rbtnCurrentStock = new System.Windows.Forms.RadioButton();
-            this.rbtnReceivedStock = new System.Windows.Forms.RadioButton();
             this.rbtnOutOfStock = new System.Windows.Forms.RadioButton();
+            this.rbtnReceivedStock = new System.Windows.Forms.RadioButton();
+            this.rbtnCurrentStock = new System.Windows.Forms.RadioButton();
             this.grvResult = new System.Windows.Forms.DataGridView();
+            this.session4DataSet1 = new DALs.Session4DataSet();
             this.ColumnPartName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnCurrentStock = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnReceivedStock = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnAction = new System.Windows.Forms.DataGridViewLinkColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.session4DataSet1)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grvResult)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.session4DataSet1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -55,11 +55,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Warehouse:";
             this.label1.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // session4DataSet1
-            // 
-            this.session4DataSet1.DataSetName = "Session4DataSet";
-            this.session4DataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // label2
             // 
@@ -92,17 +87,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Inventory Report";
             // 
-            // rbtnCurrentStock
+            // rbtnOutOfStock
             // 
-            this.rbtnCurrentStock.AutoSize = true;
-            this.rbtnCurrentStock.Location = new System.Drawing.Point(23, 19);
-            this.rbtnCurrentStock.Name = "rbtnCurrentStock";
-            this.rbtnCurrentStock.Size = new System.Drawing.Size(90, 17);
-            this.rbtnCurrentStock.TabIndex = 0;
-            this.rbtnCurrentStock.TabStop = true;
-            this.rbtnCurrentStock.Text = "Current Stock";
-            this.rbtnCurrentStock.UseVisualStyleBackColor = true;
-            this.rbtnCurrentStock.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            this.rbtnOutOfStock.AutoSize = true;
+            this.rbtnOutOfStock.Location = new System.Drawing.Point(330, 19);
+            this.rbtnOutOfStock.Name = "rbtnOutOfStock";
+            this.rbtnOutOfStock.Size = new System.Drawing.Size(85, 17);
+            this.rbtnOutOfStock.TabIndex = 2;
+            this.rbtnOutOfStock.TabStop = true;
+            this.rbtnOutOfStock.Text = "Out of Stock";
+            this.rbtnOutOfStock.UseVisualStyleBackColor = true;
+            this.rbtnOutOfStock.CheckedChanged += new System.EventHandler(this.rbtnOutOfStock_CheckedChanged);
             // 
             // rbtnReceivedStock
             // 
@@ -116,17 +111,17 @@
             this.rbtnReceivedStock.UseVisualStyleBackColor = true;
             this.rbtnReceivedStock.CheckedChanged += new System.EventHandler(this.rbtnReceivedStock_CheckedChanged);
             // 
-            // rbtnOutOfStock
+            // rbtnCurrentStock
             // 
-            this.rbtnOutOfStock.AutoSize = true;
-            this.rbtnOutOfStock.Location = new System.Drawing.Point(330, 19);
-            this.rbtnOutOfStock.Name = "rbtnOutOfStock";
-            this.rbtnOutOfStock.Size = new System.Drawing.Size(85, 17);
-            this.rbtnOutOfStock.TabIndex = 2;
-            this.rbtnOutOfStock.TabStop = true;
-            this.rbtnOutOfStock.Text = "Out of Stock";
-            this.rbtnOutOfStock.UseVisualStyleBackColor = true;
-            this.rbtnOutOfStock.CheckedChanged += new System.EventHandler(this.rbtnOutOfStock_CheckedChanged);
+            this.rbtnCurrentStock.AutoSize = true;
+            this.rbtnCurrentStock.Location = new System.Drawing.Point(23, 19);
+            this.rbtnCurrentStock.Name = "rbtnCurrentStock";
+            this.rbtnCurrentStock.Size = new System.Drawing.Size(90, 17);
+            this.rbtnCurrentStock.TabIndex = 0;
+            this.rbtnCurrentStock.TabStop = true;
+            this.rbtnCurrentStock.Text = "Current Stock";
+            this.rbtnCurrentStock.UseVisualStyleBackColor = true;
+            this.rbtnCurrentStock.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // grvResult
             // 
@@ -140,32 +135,42 @@
             this.grvResult.Name = "grvResult";
             this.grvResult.Size = new System.Drawing.Size(776, 267);
             this.grvResult.TabIndex = 3;
+            this.grvResult.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grvResult_CellClick);
             this.grvResult.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // session4DataSet1
+            // 
+            this.session4DataSet1.DataSetName = "Session4DataSet";
+            this.session4DataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // ColumnPartName
             // 
             this.ColumnPartName.HeaderText = "Part Name";
             this.ColumnPartName.Name = "ColumnPartName";
+            this.ColumnPartName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColumnPartName.Width = 250;
             // 
             // ColumnCurrentStock
             // 
             this.ColumnCurrentStock.HeaderText = "Current Stock";
             this.ColumnCurrentStock.Name = "ColumnCurrentStock";
+            this.ColumnCurrentStock.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColumnCurrentStock.Width = 150;
             // 
             // ColumnReceivedStock
             // 
             this.ColumnReceivedStock.HeaderText = "Received Stock";
             this.ColumnReceivedStock.Name = "ColumnReceivedStock";
+            this.ColumnReceivedStock.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.ColumnReceivedStock.Width = 150;
             // 
             // ColumnAction
             // 
+            this.ColumnAction.ActiveLinkColor = System.Drawing.Color.Blue;
             this.ColumnAction.HeaderText = "Action";
             this.ColumnAction.Name = "ColumnAction";
             this.ColumnAction.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColumnAction.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.ColumnAction.VisitedLinkColor = System.Drawing.Color.Blue;
             this.ColumnAction.Width = 183;
             // 
             // InventoryReport
@@ -181,10 +186,10 @@
             this.Name = "InventoryReport";
             this.Text = "Inventory Report";
             this.Load += new System.EventHandler(this.InventoryReport_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.session4DataSet1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grvResult)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.session4DataSet1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

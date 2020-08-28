@@ -23,5 +23,17 @@ namespace BULs
         {
             return partsDAL.TimKiemPartIDTheoTen(partName);
         }
+        public List<string> TimDanhSachPartIDTheoWarehouseID(string wareHouseID)
+        {
+            return partsDAL.TimDanhSachPartIDTungDuaHangDenKhoTheoIDKho(wareHouseID);
+        }
+        public string TimKiemTenTheoPartID(string ID)
+        {
+            return partsDAL.TimKiemTenPartTheoID(ID);
+        }
+        public double TimKiemMinimumAmountTheoID(string id)
+        {
+            return partsDAL.TimKiemMinimumAmountTheoID(id);
+        }
     }
 }

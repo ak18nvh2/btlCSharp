@@ -99,5 +99,22 @@ namespace DALs
             cnn.Close();
             return i;
         }
+        public List<string> TimDanhSachPartIDTungDuaHangDenKhoTheoIDKho(string wareHouseID)// tìm danh sách id part từng đưa hàng đến kho
+        {
+            cnn.Open();
+            string sql = "SELECT DISTINCT OrderItems.PartID FROM OrderItems inner join Orders on OrderItems.OrderID = Orders.ID WHERE DestinationWarehouseID = @id";
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.Parameters.AddWithValue("id", wareHouseID);
+            SqlDataReader dr = cmd.ExecuteReader();
+
+            List<string> dsPartID = new List<string>();
+            while (dr.Read())
+            {
+                dsPartID.Add(dr["PartID"].ToString());
+            }
+            dr.Close();
+            cnn.Close();
+            return dsPartID;
+        }
     }
 }

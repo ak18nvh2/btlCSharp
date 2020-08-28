@@ -186,7 +186,7 @@ namespace InventoryManagement
                     double amountChuanBiXoa = double.Parse(dataGridView1.Rows[indexRow].Cells[3].Value.ToString());
                     if (chenhlechPart < amountChuanBiXoa)
                     {
-                        MessageBox.Show("Can't remove this record ! If remove this record, the inventory of a part in this warehouse negative "+(amountChuanBiXoa-chenhlechPart) +"! ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Can't remove this record ! If remove this record, the inventory of a part in "+destinationName +" negative "+(amountChuanBiXoa-chenhlechPart) +"! ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     else
                     {

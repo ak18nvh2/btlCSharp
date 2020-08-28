@@ -23,5 +23,18 @@ namespace BULs
         {
             inventoryDAL.XoaMotDongTrongBang(orderItemID);
         }
+        public double TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(string partName, string wareHouseName)
+        {
+            return inventoryDAL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoVaSoMinimumAmount(partName, wareHouseName);
+        }
+        public double TinhTongAmountDuocNhapCuaPartTrongWarehouse(string wareHouseID, string partID)
+        {
+            return inventoryDAL.TinhTongAmountCuaPartMaKhoDaNhanTheoIDKhoVaIDPart(wareHouseID, partID);
+        }
+        public double TinhTongAmountCuaPartMaKhoDaNhanTheoIDKhoVaIDPart(string wareHouseId, string partID, string batchNumber)
+        {
+           
+            return inventoryDAL.TinhTongAmountCuaPartMaKhoDaNhanTheoIDKhoVaIDPart(wareHouseId,partID,batchNumber);
+        }
     }
 }
