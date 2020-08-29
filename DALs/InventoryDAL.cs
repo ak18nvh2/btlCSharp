@@ -149,7 +149,8 @@ namespace DALs
             double sumAmount = 0;
             while (dr.Read())
             {
-                sumAmount += Convert.ToDouble(dr["Amount"]);
+                 sumAmount += Convert.ToDouble(dr["Amount"]);
+               
             }
             dr.Close();
             cnn.Close();

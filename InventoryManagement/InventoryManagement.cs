@@ -201,6 +201,14 @@ namespace InventoryManagement
                     }
 
                 }
+                else if(indexColumn == 6)
+                {
+                    this.WindowState = FormWindowState.Minimized;
+                    EditRowInventoryManagement editRowInventoryManagement = new EditRowInventoryManagement();
+                    editRowInventoryManagement.ShowDialog();
+                    this.WindowState = FormWindowState.Normal;
+                    Form1_Load(sender, e);
+                }
             }
            else
             {   

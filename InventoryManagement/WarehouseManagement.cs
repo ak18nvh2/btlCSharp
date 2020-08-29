@@ -48,13 +48,20 @@ namespace InventoryManagement
             cbbDestinationWarehouse.DisplayMember = "Name";
             cbbDestinationWarehouse.ValueMember = "ID";
 
+            List<string> dsPartTungDuaHangDenKho = partBUL.TimDanhSachPartIDTungDuaHangDenKhoTheoIDKho(cbbSourceWarehouse.SelectedValue.ToString());
+            List<string> dsPartHienThiLenCBB = new List<string>();
+            for (int i = 0; i < dsPartTungDuaHangDenKho.Count; i++)
+            {
+                string partName = partBUL.TimKiemTenTheoPartID(dsPartTungDuaHangDenKho[i]);
+                double curentStock = inventoryBUL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(partName, cbbSourceWarehouse.Text) + partBUL.TimKiemMinimumAmountTheoID(dsPartTungDuaHangDenKho[i]);
+                if (curentStock > 0)
+                {
+                    dsPartHienThiLenCBB.Add(partName);
+                }
 
-            List<PartsDTO> partsDTOs = partBUL.DocDanhSachPart();
-            var bindingSourcePart = new BindingSource();
-            bindingSourcePart.DataSource = partsDTOs;
-            cbbPartName.DataSource = bindingSourcePart.DataSource;
-            cbbPartName.DisplayMember = "Name";
-            cbbPartName.ValueMember = "ID";
+            }
+            cbbPartName.DataSource = dsPartHienThiLenCBB;
+
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -73,9 +80,9 @@ namespace InventoryManagement
         }
 
         private void cbbPartName_DropDownClosed(object sender, EventArgs e)
-        {
+        {   
             List<string> dsBatchNumber =
-                ordersBUL.DocDanhSachBatchNumberTheoPartID(cbbPartName.SelectedValue.ToString());
+                ordersBUL.DocDanhSachBatchNumberTheoPartID(partBUL.TimPartIDTheoTen(cbbPartName.Text));
             cbbBatchNumber.DataSource = dsBatchNumber;
         }
         List<string> partNames = new List<string>();
@@ -128,7 +135,7 @@ namespace InventoryManagement
                 else
                 {
                     string partName = cbbPartName.Text;
-                    string idPart = cbbPartName.SelectedValue.ToString();
+                    string idPart = partBUL.TimPartIDTheoTen(partName);
                     int batchNumberHasRequired = partBUL.TimBatchNumberHasRequiredBangID(idPart);
                     string batchNumber = cbbBatchNumber.Text;
                     if (batchNumberHasRequired == 1)
@@ -279,6 +286,25 @@ namespace InventoryManagement
             {
                 MessageBox.Show("No one on this part list!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void cbbSourceWarehouse_DropDownClosed(object sender, EventArgs e)
+        {
+            // tìm danh sách
+            List<string> dsPartTungDuaHangDenKho = partBUL.TimDanhSachPartIDTungDuaHangDenKhoTheoIDKho(cbbSourceWarehouse.SelectedValue.ToString());
+            List<string> dsPartHienThiLenCBB = new List<string>();
+            for (int i = 0; i < dsPartTungDuaHangDenKho.Count; i++)
+            {
+                string partName = partBUL.TimKiemTenTheoPartID(dsPartTungDuaHangDenKho[i]);
+                double curentStock = inventoryBUL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(partName, cbbSourceWarehouse.Text) + partBUL.TimKiemMinimumAmountTheoID(dsPartTungDuaHangDenKho[i]);
+                if (curentStock > 0)
+                {
+                    dsPartHienThiLenCBB.Add(partName);
+                }
+
+            }
+            cbbPartName.DataSource = dsPartHienThiLenCBB;
+
         }
     }
 }

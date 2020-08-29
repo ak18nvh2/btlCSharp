@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EditRowInventoryManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditRowInventoryManagement.Designer.cs">
+      <DependentUpon>EditRowInventoryManagement.cs</DependentUpon>
+    </Compile>
     <Compile Include="InventoryManagement.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +84,9 @@
     <Compile Include="WarehouseManagement.Designer.cs">
       <DependentUpon>WarehouseManagement.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="EditRowInventoryManagement.resx">
+      <DependentUpon>EditRowInventoryManagement.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="InventoryManagement.resx">
       <DependentUpon>InventoryManagement.cs</DependentUpon>
     </EmbeddedResource>

@@ -36,6 +36,10 @@
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ColumnPartName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnBatchNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnAction = new System.Windows.Forms.DataGridViewLinkColumn();
             this.button1 = new System.Windows.Forms.Button();
             this.txtAmount = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -45,10 +49,6 @@
             this.cbbPartName = new System.Windows.Forms.ComboBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.ColumnPartName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnBatchNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnAction = new System.Windows.Forms.DataGridViewLinkColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -88,6 +88,7 @@
             this.cbbSourceWarehouse.Name = "cbbSourceWarehouse";
             this.cbbSourceWarehouse.Size = new System.Drawing.Size(239, 21);
             this.cbbSourceWarehouse.TabIndex = 2;
+            this.cbbSourceWarehouse.DropDownClosed += new System.EventHandler(this.cbbSourceWarehouse_DropDownClosed);
             // 
             // cbbDestinationWarehouse
             // 
@@ -138,6 +139,34 @@
             this.dataGridView1.Size = new System.Drawing.Size(763, 180);
             this.dataGridView1.TabIndex = 5;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            // 
+            // ColumnPartName
+            // 
+            this.ColumnPartName.HeaderText = "Part Name";
+            this.ColumnPartName.Name = "ColumnPartName";
+            this.ColumnPartName.Width = 240;
+            // 
+            // ColumnBatchNumber
+            // 
+            this.ColumnBatchNumber.HeaderText = "Batch Number";
+            this.ColumnBatchNumber.Name = "ColumnBatchNumber";
+            this.ColumnBatchNumber.Width = 180;
+            // 
+            // ColumnAmount
+            // 
+            this.ColumnAmount.HeaderText = "Amount";
+            this.ColumnAmount.Name = "ColumnAmount";
+            this.ColumnAmount.Width = 179;
+            // 
+            // ColumnAction
+            // 
+            this.ColumnAction.ActiveLinkColor = System.Drawing.Color.Blue;
+            this.ColumnAction.HeaderText = "Action";
+            this.ColumnAction.Name = "ColumnAction";
+            this.ColumnAction.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColumnAction.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.ColumnAction.VisitedLinkColor = System.Drawing.Color.Blue;
+            this.ColumnAction.Width = 120;
             // 
             // button1
             // 
@@ -223,34 +252,6 @@
             this.button3.Text = "Cancel";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // ColumnPartName
-            // 
-            this.ColumnPartName.HeaderText = "Part Name";
-            this.ColumnPartName.Name = "ColumnPartName";
-            this.ColumnPartName.Width = 240;
-            // 
-            // ColumnBatchNumber
-            // 
-            this.ColumnBatchNumber.HeaderText = "Batch Number";
-            this.ColumnBatchNumber.Name = "ColumnBatchNumber";
-            this.ColumnBatchNumber.Width = 180;
-            // 
-            // ColumnAmount
-            // 
-            this.ColumnAmount.HeaderText = "Amount";
-            this.ColumnAmount.Name = "ColumnAmount";
-            this.ColumnAmount.Width = 179;
-            // 
-            // ColumnAction
-            // 
-            this.ColumnAction.ActiveLinkColor = System.Drawing.Color.Blue;
-            this.ColumnAction.HeaderText = "Action";
-            this.ColumnAction.Name = "ColumnAction";
-            this.ColumnAction.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColumnAction.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.ColumnAction.VisitedLinkColor = System.Drawing.Color.Blue;
-            this.ColumnAction.Width = 120;
             // 
             // WarehouseManagement
             // 

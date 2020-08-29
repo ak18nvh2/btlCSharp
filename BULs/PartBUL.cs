@@ -35,5 +35,10 @@ namespace BULs
         {
             return partsDAL.TimKiemMinimumAmountTheoID(id);
         }
+        public List<string> TimDanhSachPartIDTungDuaHangDenKhoTheoIDKho(string wareHouseID)// tìm danh sách id part từng đưa hàng đến kho
+        {
+        
+            return partsDAL.TimDanhSachPartIDTungDuaHangDenKhoTheoIDKho(wareHouseID);
+        }
     }
 }
