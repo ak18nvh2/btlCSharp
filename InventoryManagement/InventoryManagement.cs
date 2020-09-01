@@ -95,9 +95,17 @@ namespace InventoryManagement
         }
         void showDataGridView()
         {
-            inventoryDTOs = inventoryBUL.DocDanhSachInventory();
-            SapXepDuLieuDataGridView(inventoryDTOs);
-            HienThiDuLieuLenDataGridView(inventoryDTOs);
+            try
+            {
+                inventoryDTOs = inventoryBUL.DocDanhSachInventory();
+                SapXepDuLieuDataGridView(inventoryDTOs);
+                HienThiDuLieuLenDataGridView(inventoryDTOs);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
         }
         int checkHienThiHeader = 0;
         private void Form1_Load(object sender, EventArgs e)
@@ -177,27 +185,33 @@ namespace InventoryManagement
             {
                 if (indexColumn == 7)//remove
                 {
-                    string partName = dataGridView1.Rows[indexRow].Cells[0].Value.ToString();
-                    string destinationName = dataGridView1.Rows[indexRow].Cells[5].Value.ToString();
-                    string orderItemID = dataGridView1.Rows[indexRow].Cells[8].Value.ToString();
-                    string batchNumber = orderItemsBUL.TimBatchNumberBangID(orderItemID);
-                    double chenhlechPart =
-                        inventoryBUL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(partName, destinationName, batchNumber);
-                    double amountChuanBiXoa = double.Parse(dataGridView1.Rows[indexRow].Cells[3].Value.ToString());
-                    if (chenhlechPart < amountChuanBiXoa)
+                   try
                     {
-                        MessageBox.Show("Can't remove this record ! If remove this record, the inventory of a part in "+destinationName +" negative "+(amountChuanBiXoa-chenhlechPart) +"! ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                    {
-                        DialogResult a = MessageBox.Show("Are you sure delete this record?", "Notification", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                        if (a == DialogResult.Yes)
+                        string partName = dataGridView1.Rows[indexRow].Cells[0].Value.ToString();
+                        string destinationName = dataGridView1.Rows[indexRow].Cells[5].Value.ToString();
+                        string orderItemID = dataGridView1.Rows[indexRow].Cells[8].Value.ToString();
+                        string batchNumber = orderItemsBUL.TimBatchNumberBangID(orderItemID);
+                        double chenhlechPart =
+                            inventoryBUL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(partName, destinationName, batchNumber);
+                        double amountChuanBiXoa = double.Parse(dataGridView1.Rows[indexRow].Cells[3].Value.ToString());
+                        if (chenhlechPart < amountChuanBiXoa)
                         {
-
-                            inventoryBUL.XoaMotDong(orderItemID);
-                            MessageBox.Show("Successfully! Record has been deleted!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            showDataGridView();
+                            MessageBox.Show("Can't remove this record ! If remove this record, the inventory of a part in " + destinationName + " negative " + (amountChuanBiXoa - chenhlechPart) + "! ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
+                        else
+                        {
+                            DialogResult a = MessageBox.Show("Are you sure delete this record?", "Notification", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                            if (a == DialogResult.Yes)
+                            {
+
+                                inventoryBUL.XoaMotDong(orderItemID);
+                                MessageBox.Show("Successfully! Record has been deleted!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                showDataGridView();
+                            }
+                        }
+                    } catch (Exception)
+                    {
+                        MessageBox.Show("Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
                 }

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -33,34 +34,41 @@ namespace InventoryManagement
 
         private void WarehouseManagement_Load(object sender, EventArgs e)
         {
-            this.TopMost = true;
-            List<WarehousesDTO> listSourceWarehouse = warehousesBUL.LayDanhSachWarehouse();
-            var bindingSourceWarehouse = new BindingSource();
-            bindingSourceWarehouse.DataSource = listSourceWarehouse;
-            cbbSourceWarehouse.DataSource = bindingSourceWarehouse.DataSource;
-            cbbSourceWarehouse.DisplayMember = "Name";
-            cbbSourceWarehouse.ValueMember = "ID";
-
-            List<WarehousesDTO> listDestinationWarehouse = warehousesBUL.LayDanhSachWarehouse();
-            var bindingDestinationWarehouse = new BindingSource();
-            bindingDestinationWarehouse.DataSource = listDestinationWarehouse;
-            cbbDestinationWarehouse.DataSource = bindingDestinationWarehouse.DataSource;
-            cbbDestinationWarehouse.DisplayMember = "Name";
-            cbbDestinationWarehouse.ValueMember = "ID";
-
-            List<string> dsPartTungDuaHangDenKho = partBUL.TimDanhSachPartIDTungDuaHangDenKhoTheoIDKho(cbbSourceWarehouse.SelectedValue.ToString());
-            List<string> dsPartHienThiLenCBB = new List<string>();
-            for (int i = 0; i < dsPartTungDuaHangDenKho.Count; i++)
+            try
             {
-                string partName = partBUL.TimKiemTenTheoPartID(dsPartTungDuaHangDenKho[i]);
-                double curentStock = inventoryBUL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(partName, cbbSourceWarehouse.Text) + partBUL.TimKiemMinimumAmountTheoID(dsPartTungDuaHangDenKho[i]);
-                if (curentStock > 0)
-                {
-                    dsPartHienThiLenCBB.Add(partName);
-                }
+                this.TopMost = true;
+                List<WarehousesDTO> listSourceWarehouse = warehousesBUL.LayDanhSachWarehouse();
+                var bindingSourceWarehouse = new BindingSource();
+                bindingSourceWarehouse.DataSource = listSourceWarehouse;
+                cbbSourceWarehouse.DataSource = bindingSourceWarehouse.DataSource;
+                cbbSourceWarehouse.DisplayMember = "Name";
+                cbbSourceWarehouse.ValueMember = "ID";
 
+                List<WarehousesDTO> listDestinationWarehouse = warehousesBUL.LayDanhSachWarehouse();
+                var bindingDestinationWarehouse = new BindingSource();
+                bindingDestinationWarehouse.DataSource = listDestinationWarehouse;
+                cbbDestinationWarehouse.DataSource = bindingDestinationWarehouse.DataSource;
+                cbbDestinationWarehouse.DisplayMember = "Name";
+                cbbDestinationWarehouse.ValueMember = "ID";
+
+                List<string> dsPartTungDuaHangDenKho = partBUL.TimDanhSachPartIDTungDuaHangDenKhoTheoIDKho(cbbSourceWarehouse.SelectedValue.ToString());
+                List<string> dsPartHienThiLenCBB = new List<string>();
+                for (int i = 0; i < dsPartTungDuaHangDenKho.Count; i++)
+                {
+                    string partName = partBUL.TimKiemTenTheoPartID(dsPartTungDuaHangDenKho[i]);
+                    double curentStock = inventoryBUL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(partName, cbbSourceWarehouse.Text) + partBUL.TimKiemMinimumAmountTheoID(dsPartTungDuaHangDenKho[i]);
+                    if (curentStock > 0)
+                    {
+                        dsPartHienThiLenCBB.Add(partName);
+                    }
+
+                }
+                cbbPartName.DataSource = dsPartHienThiLenCBB;
+
+            } catch (Exception)
+            {
+                MessageBox.Show("Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            cbbPartName.DataSource = dsPartHienThiLenCBB;
 
         }
 
@@ -80,10 +88,17 @@ namespace InventoryManagement
         }
 
         private void cbbPartName_DropDownClosed(object sender, EventArgs e)
-        {   
-            List<string> dsBatchNumber =
+        {
+            try
+            {
+                List<string> dsBatchNumber =
                 ordersBUL.DocDanhSachBatchNumberTheoPartID(partBUL.TimPartIDTheoTen(cbbPartName.Text));
-            cbbBatchNumber.DataSource = dsBatchNumber;
+                cbbBatchNumber.DataSource = dsBatchNumber;
+            }
+            catch
+            {
+                MessageBox.Show("Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         List<string> partNames = new List<string>();
         List<string> batchNumbers = new List<string>();
@@ -134,56 +149,62 @@ namespace InventoryManagement
                 }
                 else
                 {
-                    string partName = cbbPartName.Text;
-                    string idPart = partBUL.TimPartIDTheoTen(partName);
-                    int batchNumberHasRequired = partBUL.TimBatchNumberHasRequiredBangID(idPart);
-                    string batchNumber = cbbBatchNumber.Text;
-                    if (batchNumberHasRequired == 1)
+                    try
                     {
-
-                        int checkBatchNumber = 1;
-                        for (int i = 0; i < partNames.Count; i++)
+                        string partName = cbbPartName.Text;
+                        string idPart = partBUL.TimPartIDTheoTen(partName);
+                        int batchNumberHasRequired = partBUL.TimBatchNumberHasRequiredBangID(idPart);
+                        string batchNumber = cbbBatchNumber.Text;
+                        if (batchNumberHasRequired == 1)
                         {
-                            List<string> batchNumberChild = new List<string>();
-                            if (partNames[i] == partName)
-                            {
-                                if (cbbBatchNumber.Text == batchNumbers[i])
-                                {
-                                    checkBatchNumber = 0;
-                                    break;
-                                }
 
+                            int checkBatchNumber = 1;
+                            for (int i = 0; i < partNames.Count; i++)
+                            {
+                                List<string> batchNumberChild = new List<string>();
+                                if (partNames[i] == partName)
+                                {
+                                    if (cbbBatchNumber.Text == batchNumbers[i])
+                                    {
+                                        checkBatchNumber = 0;
+                                        break;
+                                    }
+
+                                }
+                            }
+
+                            if (checkBatchNumber == 1)
+                            {
+                                batchNumbers.Add(cbbBatchNumber.Text);
+                                amounts.Add(amount);
+                                partNames.Add(partName);
+                                this.showPartListToDataGridView(partNames, batchNumbers, amounts);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Had this batch number on this list!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
-
-                        if (checkBatchNumber == 1)
-                        {
-                            batchNumbers.Add(cbbBatchNumber.Text);
-                            amounts.Add(amount);
-                            partNames.Add(partName);
-                            this.showPartListToDataGridView(partNames, batchNumbers, amounts);
-                        }
                         else
                         {
-                            MessageBox.Show("Had this batch number on this list!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            if (!partNames.Contains(partName))
+                            {
+                                partNames.Add(partName);
+                                batchNumbers.Add(batchNumber);
+                                amounts.Add(amount);
+                                showPartListToDataGridView(partNames, batchNumbers, amounts);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Had this part name on this list!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+
                         }
-                    }
-                    else
+
+                    } catch (Exception)
                     {
-                        if (!partNames.Contains(partName))
-                        {
-                            partNames.Add(partName);
-                            batchNumbers.Add(batchNumber);
-                            amounts.Add(amount);
-                            showPartListToDataGridView(partNames, batchNumbers, amounts);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Had this part name on this list!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-
+                        MessageBox.Show("Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    
 
                 }
             }
@@ -222,63 +243,69 @@ namespace InventoryManagement
                 }
                 else
                 {
-                    int checkHopLe = -1;
-                    double negativeAmount = 0;
-                    for(int i=0; i< partNames.Count; i++)
+                    try
                     {
-                        double chenhlechPart =
-                        inventoryBUL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(partNames[i], cbbSourceWarehouse.Text, batchNumbers[i]);
-                        double amountChuanBiXoa = amounts[i];
-                        if(chenhlechPart < amountChuanBiXoa)
+                        int checkHopLe = -1;
+                        double negativeAmount = 0;
+                        for (int i = 0; i < partNames.Count; i++)
                         {
-                            checkHopLe = i+1;
-                            negativeAmount = amountChuanBiXoa - chenhlechPart;
-                            break;
+                            double chenhlechPart =
+                            inventoryBUL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(partNames[i], cbbSourceWarehouse.Text, batchNumbers[i]);
+                            double amountChuanBiXoa = amounts[i];
+                            if (chenhlechPart < amountChuanBiXoa)
+                            {
+                                checkHopLe = i + 1;
+                                negativeAmount = amountChuanBiXoa - chenhlechPart;
+                                break;
+                            }
                         }
-                    }
-                    if(checkHopLe != -1)
-                    {
-                        string batchNumberX = "";
-                        if(cbbBatchNumber.Text != "")
+                        if (checkHopLe != -1)
                         {
-                            batchNumberX = " with batch number " + batchNumbers[checkHopLe-1];
-                        }
-                        MessageBox.Show("Error in line "+checkHopLe+ "! The inventory for a part "+partNames[checkHopLe-1]+ batchNumberX+ " negative "+negativeAmount+"!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                    {
-                        int soLuongBanGhiOrder = ordersBUL.DemSoLuongOrder();
-                        string orderID = (soLuongBanGhiOrder + 1000).ToString();
-                        string transactionTypeID = "2";
-                        string supplierID = "";
-                        string sourceWareHouseID = cbbSourceWarehouse.SelectedValue.ToString();
-                        string destionationWareHouseID = cbbDestinationWarehouse.SelectedValue.ToString();
-                        DateTime d = dateTimePicker1.Value;
-                        if (d > DateTime.Now)
-                        {
-                            MessageBox.Show("Error in Date!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            string batchNumberX = "";
+                            if (cbbBatchNumber.Text != "")
+                            {
+                                batchNumberX = " with batch number " + batchNumbers[checkHopLe - 1];
+                            }
+                            MessageBox.Show("Error in line " + checkHopLe + "! The inventory for a part " + partNames[checkHopLe - 1] + batchNumberX + " negative " + negativeAmount + "!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         else
                         {
-                            OrdersDTO ordersDTO = new OrdersDTO(orderID, transactionTypeID, supplierID, sourceWareHouseID, destionationWareHouseID, d);
-                            ordersBUL.ThemMotOrder2(ordersDTO);
-                            int orderItemID = orderItemsBUL.DemSoLuongOrderItem() + 1000;
-                            for (int i = 0; i < partNames.Count; i++)
+                            int soLuongBanGhiOrder = ordersBUL.DemSoLuongOrder();
+                            string orderID = (soLuongBanGhiOrder + 1000).ToString();
+                            string transactionTypeID = "2";
+                            string supplierID = "";
+                            string sourceWareHouseID = cbbSourceWarehouse.SelectedValue.ToString();
+                            string destionationWareHouseID = cbbDestinationWarehouse.SelectedValue.ToString();
+                            DateTime d = dateTimePicker1.Value;
+                            if (d > DateTime.Now)
                             {
-                                OrderItemsDTO orderItemsDTO = new OrderItemsDTO();
-                                orderItemsDTO.OrderID = orderID;
-                                orderItemsDTO.ID = (++orderItemID).ToString();
-                                orderItemsDTO.PartID = partBUL.TimPartIDTheoTen(partNames[i]);
-                                orderItemsDTO.BatchNumber = batchNumbers[i];
-                                orderItemsDTO.Amount = amounts[i];
-                                orderItemsBUL.ThemMotOrderItem(orderItemsDTO);
+                                MessageBox.Show("Error in Date!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            else
+                            {
+                                OrdersDTO ordersDTO = new OrdersDTO(orderID, transactionTypeID, supplierID, sourceWareHouseID, destionationWareHouseID, d);
+                                ordersBUL.ThemMotOrder2(ordersDTO);
+                                int orderItemID = orderItemsBUL.DemSoLuongOrderItem() + 1000;
+                                for (int i = 0; i < partNames.Count; i++)
+                                {
+                                    OrderItemsDTO orderItemsDTO = new OrderItemsDTO();
+                                    orderItemsDTO.OrderID = orderID;
+                                    orderItemsDTO.ID = (++orderItemID).ToString();
+                                    orderItemsDTO.PartID = partBUL.TimPartIDTheoTen(partNames[i]);
+                                    orderItemsDTO.BatchNumber = batchNumbers[i];
+                                    orderItemsDTO.Amount = amounts[i];
+                                    orderItemsBUL.ThemMotOrderItem(orderItemsDTO);
+                                }
+
+                                MessageBox.Show("Successfully! Record has been added!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                this.Close();
+
                             }
 
-                            MessageBox.Show("Successfully! Record has been added!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            this.Close();
-
                         }
-
+                    } catch
+                    {
+                        MessageBox.Show("Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -291,20 +318,27 @@ namespace InventoryManagement
         private void cbbSourceWarehouse_DropDownClosed(object sender, EventArgs e)
         {
             // tìm danh sách
-            List<string> dsPartTungDuaHangDenKho = partBUL.TimDanhSachPartIDTungDuaHangDenKhoTheoIDKho(cbbSourceWarehouse.SelectedValue.ToString());
-            List<string> dsPartHienThiLenCBB = new List<string>();
-            for (int i = 0; i < dsPartTungDuaHangDenKho.Count; i++)
+            try
             {
-                string partName = partBUL.TimKiemTenTheoPartID(dsPartTungDuaHangDenKho[i]);
-                double curentStock = inventoryBUL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(partName, cbbSourceWarehouse.Text) + partBUL.TimKiemMinimumAmountTheoID(dsPartTungDuaHangDenKho[i]);
-                if (curentStock > 0)
+                List<string> dsPartTungDuaHangDenKho = partBUL.TimDanhSachPartIDTungDuaHangDenKhoTheoIDKho(cbbSourceWarehouse.SelectedValue.ToString());
+                List<string> dsPartHienThiLenCBB = new List<string>();
+                for (int i = 0; i < dsPartTungDuaHangDenKho.Count; i++)
                 {
-                    dsPartHienThiLenCBB.Add(partName);
+                    string partName = partBUL.TimKiemTenTheoPartID(dsPartTungDuaHangDenKho[i]);
+                    double curentStock = inventoryBUL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(partName, cbbSourceWarehouse.Text) + partBUL.TimKiemMinimumAmountTheoID(dsPartTungDuaHangDenKho[i]);
+                    if (curentStock > 0)
+                    {
+                        dsPartHienThiLenCBB.Add(partName);
+                    }
+
                 }
+                cbbPartName.DataSource = dsPartHienThiLenCBB;
 
             }
-            cbbPartName.DataSource = dsPartHienThiLenCBB;
-
-        }
+            catch
+            {
+                MessageBox.Show("Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            } 
     }
 }

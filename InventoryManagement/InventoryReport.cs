@@ -25,11 +25,18 @@ namespace InventoryManagement
 
         private void InventoryReport_Load(object sender, EventArgs e)
         {
-            this.TopMost = true;
-            List<WarehousesDTO> warehousesDTOs = warehousesBUL.LayDanhSachWarehouse();
-            cbbWarehouse.DataSource = warehousesDTOs;
-            cbbWarehouse.DisplayMember = "Name";
-            cbbWarehouse.ValueMember = "ID";
+            try
+            {
+                this.TopMost = true;
+                List<WarehousesDTO> warehousesDTOs = warehousesBUL.LayDanhSachWarehouse();
+                cbbWarehouse.DataSource = warehousesDTOs;
+                cbbWarehouse.DisplayMember = "Name";
+                cbbWarehouse.ValueMember = "ID";
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
         }
         List<string> partNames = new List<string>();
@@ -52,37 +59,43 @@ namespace InventoryManagement
         }
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            if (rbtnCurrentStock.Checked)
+            try
             {
-                grvResult.Rows.Clear();
-                partNames.Clear();
-                currentStocks.Clear();
-                receivedStocks.Clear();
-                actions.Clear();
-                rbtnCurrentStock.Checked = true;
-                string wareHouseName = cbbWarehouse.Text;
-                List<string> dsPartID = partBUL.TimDanhSachPartIDTheoWarehouseID(cbbWarehouse.SelectedValue.ToString());
-
-                for (int i = 0; i < dsPartID.Count; i++)
+                if (rbtnCurrentStock.Checked)
                 {
-                    string partName = partBUL.TimKiemTenTheoPartID(dsPartID[i]);
-                    double curentStock = inventoryBUL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(partName, wareHouseName) + partBUL.TimKiemMinimumAmountTheoID(dsPartID[i]);
-                    if (curentStock > 0)
+                    grvResult.Rows.Clear();
+                    partNames.Clear();
+                    currentStocks.Clear();
+                    receivedStocks.Clear();
+                    actions.Clear();
+                    rbtnCurrentStock.Checked = true;
+                    string wareHouseName = cbbWarehouse.Text;
+                    List<string> dsPartID = partBUL.TimDanhSachPartIDTheoWarehouseID(cbbWarehouse.SelectedValue.ToString());
+
+                    for (int i = 0; i < dsPartID.Count; i++)
                     {
-                        partNames.Add(partName);
-                        currentStocks.Add(curentStock);
-                        receivedStocks.Add(inventoryBUL.TinhTongAmountDuocNhapCuaPartTrongWarehouse(cbbWarehouse.SelectedValue.ToString(), dsPartID[i]));
-                        if (partBUL.TimBatchNumberHasRequiredBangID(dsPartID[i]) == 1)
-                            actions.Add("View Batch Numbers");
-                        else
-                            actions.Add("");
+                        string partName = partBUL.TimKiemTenTheoPartID(dsPartID[i]);
+                        double curentStock = inventoryBUL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(partName, wareHouseName) + partBUL.TimKiemMinimumAmountTheoID(dsPartID[i]);
+                        if (curentStock > 0)
+                        {
+                            partNames.Add(partName);
+                            currentStocks.Add(curentStock);
+                            receivedStocks.Add(inventoryBUL.TinhTongAmountDuocNhapCuaPartTrongWarehouse(cbbWarehouse.SelectedValue.ToString(), dsPartID[i]));
+                            if (partBUL.TimBatchNumberHasRequiredBangID(dsPartID[i]) == 1)
+                                actions.Add("View Batch Numbers");
+                            else
+                                actions.Add("");
+                        }
+
                     }
 
+                    showDataToResult(partNames, currentStocks, receivedStocks, actions);
                 }
 
-                showDataToResult(partNames, currentStocks, receivedStocks, actions);
+            } catch (Exception)
+            {
+                MessageBox.Show("Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -97,22 +110,24 @@ namespace InventoryManagement
 
         private void rbtnReceivedStock_CheckedChanged(object sender, EventArgs e)
         {
-            if (rbtnReceivedStock.Checked)
+            try
             {
-                grvResult.Rows.Clear();
-                partNames.Clear();
-                currentStocks.Clear();
-                receivedStocks.Clear();
-                actions.Clear();
-                rbtnReceivedStock.Checked = true;
-                string wareHouseName = cbbWarehouse.Text;
-                List<string> dsPartID = partBUL.TimDanhSachPartIDTheoWarehouseID(cbbWarehouse.SelectedValue.ToString());
-
-                for (int i = 0; i < dsPartID.Count; i++)
+                if (rbtnReceivedStock.Checked)
                 {
-                    string partName = partBUL.TimKiemTenTheoPartID(dsPartID[i]);
-                    double curentStock = inventoryBUL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(partName, wareHouseName) + partBUL.TimKiemMinimumAmountTheoID(dsPartID[i]);
-                   
+                    grvResult.Rows.Clear();
+                    partNames.Clear();
+                    currentStocks.Clear();
+                    receivedStocks.Clear();
+                    actions.Clear();
+                    rbtnReceivedStock.Checked = true;
+                    string wareHouseName = cbbWarehouse.Text;
+                    List<string> dsPartID = partBUL.TimDanhSachPartIDTheoWarehouseID(cbbWarehouse.SelectedValue.ToString());
+
+                    for (int i = 0; i < dsPartID.Count; i++)
+                    {
+                        string partName = partBUL.TimKiemTenTheoPartID(dsPartID[i]);
+                        double curentStock = inventoryBUL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(partName, wareHouseName) + partBUL.TimKiemMinimumAmountTheoID(dsPartID[i]);
+
                         partNames.Add(partName);
                         currentStocks.Add(curentStock);
                         receivedStocks.Add(inventoryBUL.TinhTongAmountDuocNhapCuaPartTrongWarehouse(cbbWarehouse.SelectedValue.ToString(), dsPartID[i]));
@@ -120,48 +135,59 @@ namespace InventoryManagement
                             actions.Add("View Batch Numbers");
                         else
                             actions.Add("");
-                    
 
+
+                    }
+
+                    showDataToResult(partNames, currentStocks, receivedStocks, actions);
                 }
-
-                showDataToResult(partNames, currentStocks, receivedStocks, actions);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
            
         }
 
         private void rbtnOutOfStock_CheckedChanged(object sender, EventArgs e)
         {
-            if (rbtnOutOfStock.Checked)
+            try
             {
-                grvResult.Rows.Clear();
-                partNames.Clear();
-                currentStocks.Clear();
-                receivedStocks.Clear();
-                actions.Clear();
-                rbtnOutOfStock.Checked = true;
-                string wareHouseName = cbbWarehouse.Text;
-                List<string> dsPartID = partBUL.TimDanhSachPartIDTheoWarehouseID(cbbWarehouse.SelectedValue.ToString());
-
-                for (int i = 0; i < dsPartID.Count; i++)
+                if (rbtnOutOfStock.Checked)
                 {
-                    string partName = partBUL.TimKiemTenTheoPartID(dsPartID[i]);
-                    double curentStock = inventoryBUL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(partName, wareHouseName) + partBUL.TimKiemMinimumAmountTheoID(dsPartID[i]);
-                    if (curentStock <= 0)
+                    grvResult.Rows.Clear();
+                    partNames.Clear();
+                    currentStocks.Clear();
+                    receivedStocks.Clear();
+                    actions.Clear();
+                    rbtnOutOfStock.Checked = true;
+                    string wareHouseName = cbbWarehouse.Text;
+                    List<string> dsPartID = partBUL.TimDanhSachPartIDTheoWarehouseID(cbbWarehouse.SelectedValue.ToString());
+
+                    for (int i = 0; i < dsPartID.Count; i++)
                     {
-                        partNames.Add(partName);
-                        currentStocks.Add(curentStock);
-                        receivedStocks.Add(inventoryBUL.TinhTongAmountDuocNhapCuaPartTrongWarehouse(cbbWarehouse.SelectedValue.ToString(), dsPartID[i]));
-                        if (partBUL.TimBatchNumberHasRequiredBangID(dsPartID[i]) == 1)
-                            actions.Add("View Batch Numbers");
-                        else
-                            actions.Add("");
+                        string partName = partBUL.TimKiemTenTheoPartID(dsPartID[i]);
+                        double curentStock = inventoryBUL.TinhChenhLechTongAmountLoaiHangHoaNhapVaoKhoTheoPartNameVaWareNameVoiMinimumAmountCuaPart(partName, wareHouseName) + partBUL.TimKiemMinimumAmountTheoID(dsPartID[i]);
+                        if (curentStock <= 0)
+                        {
+                            partNames.Add(partName);
+                            currentStocks.Add(curentStock);
+                            receivedStocks.Add(inventoryBUL.TinhTongAmountDuocNhapCuaPartTrongWarehouse(cbbWarehouse.SelectedValue.ToString(), dsPartID[i]));
+                            if (partBUL.TimBatchNumberHasRequiredBangID(dsPartID[i]) == 1)
+                                actions.Add("View Batch Numbers");
+                            else
+                                actions.Add("");
+                        }
+
                     }
 
+                    showDataToResult(partNames, currentStocks, receivedStocks, actions);
                 }
 
-                showDataToResult(partNames, currentStocks, receivedStocks, actions);
+            } catch (Exception)
+            {
+                MessageBox.Show("Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
         }
         private void setSateComponents()
         {

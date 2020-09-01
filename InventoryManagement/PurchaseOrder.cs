@@ -41,27 +41,35 @@ namespace InventoryManagement
 
         private void PurchaseOrder_Load(object sender, EventArgs e)
         {
-            this.TopMost = true;
-            List<SuppliersDTO> listSupplier = suppliersBUL.LayDanhSachSuplier();
-            var bindingSourceSupplier = new BindingSource();
-            bindingSourceSupplier.DataSource = listSupplier;
-            cbbSupplier.DataSource = bindingSourceSupplier.DataSource;
-            cbbSupplier.DisplayMember = "Name";
-            cbbSupplier.ValueMember = "ID";
+            try
+            {
+                this.TopMost = true;
+                List<SuppliersDTO> listSupplier = suppliersBUL.LayDanhSachSuplier();
+                var bindingSourceSupplier = new BindingSource();
+                bindingSourceSupplier.DataSource = listSupplier;
+                cbbSupplier.DataSource = bindingSourceSupplier.DataSource;
+                cbbSupplier.DisplayMember = "Name";
+                cbbSupplier.ValueMember = "ID";
 
-            List<WarehousesDTO> listWarehouse = warehousesBUL.LayDanhSachWarehouse();
-            var bindingSourceWarehouse = new BindingSource();
-            bindingSourceWarehouse.DataSource = listWarehouse;
-            cbbWarehouse.DataSource = bindingSourceWarehouse.DataSource;
-            cbbWarehouse.DisplayMember = "Name";
-            cbbWarehouse.ValueMember = "ID";
+                List<WarehousesDTO> listWarehouse = warehousesBUL.LayDanhSachWarehouse();
+                var bindingSourceWarehouse = new BindingSource();
+                bindingSourceWarehouse.DataSource = listWarehouse;
+                cbbWarehouse.DataSource = bindingSourceWarehouse.DataSource;
+                cbbWarehouse.DisplayMember = "Name";
+                cbbWarehouse.ValueMember = "ID";
 
-            List<PartsDTO> partsDTOs = partBUL.DocDanhSachPart();
-            var bindingSourcePart = new BindingSource();
-            bindingSourcePart.DataSource = partsDTOs;
-            cbbPartName.DataSource = bindingSourcePart.DataSource;
-            cbbPartName.DisplayMember = "Name";
-            cbbPartName.ValueMember = "ID";
+                List<PartsDTO> partsDTOs = partBUL.DocDanhSachPart();
+                var bindingSourcePart = new BindingSource();
+                bindingSourcePart.DataSource = partsDTOs;
+                cbbPartName.DataSource = bindingSourcePart.DataSource;
+                cbbPartName.DisplayMember = "Name";
+                cbbPartName.ValueMember = "ID";
+            } 
+            catch
+            {
+                MessageBox.Show("Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+            }
         }
         private void showPartListToDataGridView(List<string> partNames, List<string> batchNumbers,
                                                 List<double> amounts)
@@ -112,77 +120,84 @@ namespace InventoryManagement
                 }
                 else
                 {
-                    string partName = cbbPartName.Text;
-                    string idPart = cbbPartName.SelectedValue.ToString();
-
-
-                    int batchNumberHasRequired = partBUL.TimBatchNumberHasRequiredBangID(idPart);
-                    if (batchNumberHasRequired == 1)
+                    try
                     {
-                        if (txtBatchNumber.Text == "")
-                        {
-                            MessageBox.Show("Must type Batch Number!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        else
-                        {
-                            if (partNames.Contains(partName))
-                            {
-                                int checkBatchNumber = 1;
-                                for (int i = 0; i < partNames.Count; i++)
-                                {
-                                    List<string> batchNumberChild = new List<string>();
-                                    if (partNames[i] == partName)
-                                    {
-                                        if (txtBatchNumber.Text == batchNumbers[i])
-                                        {
-                                            checkBatchNumber = 0;
-                                            break;
-                                        }
+                        string partName = cbbPartName.Text;
+                        string idPart = cbbPartName.SelectedValue.ToString();
 
+
+                        int batchNumberHasRequired = partBUL.TimBatchNumberHasRequiredBangID(idPart);
+                        if (batchNumberHasRequired == 1)
+                        {
+                            if (txtBatchNumber.Text == "")
+                            {
+                                MessageBox.Show("Must type Batch Number!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            else
+                            {
+                                if (partNames.Contains(partName))
+                                {
+                                    int checkBatchNumber = 1;
+                                    for (int i = 0; i < partNames.Count; i++)
+                                    {
+                                        List<string> batchNumberChild = new List<string>();
+                                        if (partNames[i] == partName)
+                                        {
+                                            if (txtBatchNumber.Text == batchNumbers[i])
+                                            {
+                                                checkBatchNumber = 0;
+                                                break;
+                                            }
+
+                                        }
+                                    }
+
+                                    if (checkBatchNumber == 1)
+                                    {
+                                        batchNumbers.Add(txtBatchNumber.Text);
+                                        amounts.Add(amount);
+                                        partNames.Add(partName);
+                                        this.showPartListToDataGridView(partNames, batchNumbers, amounts);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Had this batch number on this list!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     }
                                 }
-
-                                if (checkBatchNumber == 1)
+                                else
                                 {
                                     batchNumbers.Add(txtBatchNumber.Text);
                                     amounts.Add(amount);
                                     partNames.Add(partName);
                                     this.showPartListToDataGridView(partNames, batchNumbers, amounts);
                                 }
-                                else
-                                {
-                                    MessageBox.Show("Had this batch number on this list!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
+
+
+
                             }
-                            else
+                        }
+                        else
+                        {
+                            if (!partNames.Contains(partName))
                             {
-                                batchNumbers.Add(txtBatchNumber.Text);
+                                batchNumbers.Add("");
                                 amounts.Add(amount);
                                 partNames.Add(partName);
                                 this.showPartListToDataGridView(partNames, batchNumbers, amounts);
                             }
+                            else
+                            {
+                                MessageBox.Show("Had this part name on this list!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-
-
+                            }
                         }
+                    
                     }
-                    else
+                    catch (Exception)
                     {
-                        if (!partNames.Contains(partName))
-                        {
-                            batchNumbers.Add("");
-                            amounts.Add(amount);
-                            partNames.Add(partName);
-                            this.showPartListToDataGridView(partNames, batchNumbers, amounts);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Had this part name on this list!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                        }
+                        MessageBox.Show("Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-
 
 
 
@@ -204,11 +219,18 @@ namespace InventoryManagement
                 DialogResult a = MessageBox.Show("Are you sure delete this record?", "Notification", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (a == DialogResult.Yes)
                 {
-                    partNames.RemoveAt(indexRow);
-                    batchNumbers.RemoveAt(indexRow);
-                    amounts.RemoveAt(indexRow);
-                    MessageBox.Show("Successfully! Record has been deleted!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    showPartListToDataGridView(partNames, batchNumbers, amounts);
+                    try
+                    {
+                        partNames.RemoveAt(indexRow);
+                        batchNumbers.RemoveAt(indexRow);
+                        amounts.RemoveAt(indexRow);
+                        MessageBox.Show("Successfully! Record has been deleted!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        showPartListToDataGridView(partNames, batchNumbers, amounts);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 
             }
@@ -236,22 +258,29 @@ namespace InventoryManagement
                     }
                     else
                     {
-                        OrdersDTO ordersDTO = new OrdersDTO(orderID, transactionTypeID, supplierID, sourceWareHouseID, destionationWareHouseID, d);
-                        ordersBUL.ThemMotOrder(ordersDTO);
-
-                        for (int i = 0; i < partNames.Count; i++)
+                        try
                         {
-                            OrderItemsDTO orderItemsDTO = new OrderItemsDTO();
-                            orderItemsDTO.OrderID = orderID;
-                            orderItemsDTO.ID = (orderItemsBUL.DemSoLuongOrderItem() + 10000).ToString();
-                            orderItemsDTO.PartID = partBUL.TimPartIDTheoTen(partNames[i]);
-                            orderItemsDTO.BatchNumber = batchNumbers[i];
-                            orderItemsDTO.Amount = amounts[i];
-                            orderItemsBUL.ThemMotOrderItem(orderItemsDTO);
-                        }
+                            OrdersDTO ordersDTO = new OrdersDTO(orderID, transactionTypeID, supplierID, sourceWareHouseID, destionationWareHouseID, d);
+                            ordersBUL.ThemMotOrder(ordersDTO);
 
-                        MessageBox.Show("Successfully! Record has been added!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        this.Close();
+                            for (int i = 0; i < partNames.Count; i++)
+                            {
+                                OrderItemsDTO orderItemsDTO = new OrderItemsDTO();
+                                orderItemsDTO.OrderID = orderID;
+                                orderItemsDTO.ID = (orderItemsBUL.DemSoLuongOrderItem() + 10000).ToString();
+                                orderItemsDTO.PartID = partBUL.TimPartIDTheoTen(partNames[i]);
+                                orderItemsDTO.BatchNumber = batchNumbers[i];
+                                orderItemsDTO.Amount = amounts[i];
+                                orderItemsBUL.ThemMotOrderItem(orderItemsDTO);
+                            }
+
+                            MessageBox.Show("Successfully! Record has been added!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.Close();
+                        }
+                        catch (Exception)
+                        {
+                            MessageBox.Show("Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
 
                     }
 
